@@ -74,8 +74,10 @@ const Register = () => {
     <div>
       <div className="flex justify-center items-center my-5">
         <div className="card bg-transparent w-full max-w-sm shrink-0 shadow-2xl">
-          <div className="card-body">
-            <h3 className="text-3xl font-bold text-center">Registration</h3>
+          <div className="card-body bg-sky-50">
+            <h3 className="text-3xl font-bold text-center text-sky-700">
+              Registration
+            </h3>
             <form onSubmit={handelRegistration}>
               <fieldset className="fieldset">
                 <label className="label">Name</label>
@@ -120,14 +122,14 @@ const Register = () => {
                     {show ? <FaEyeSlash /> : <FaEye />}
                   </span>
                 </div>
-                <button className="btn bg-gradient-to-r from-[#3b8132] to-[#72bf6a] hover:scale-105 mt-4">
+                <button className="btn border-0 btn-primary hover:scale-105 mt-4">
                   Login
                 </button>
               </fieldset>
             </form>
             <Link to={"/login"}>
               Already Have an Account ?{" "}
-              <span className="text-green-500">Log in</span>
+              <span className="text-sky-700">Log in</span>
             </Link>
             {user && <p className="text-green-500">Successfully Sign Up</p>}
             {error && <p className="text-red-500">{error}</p>}
@@ -140,7 +142,7 @@ const Register = () => {
             <div className="flex justify-center mt-5">
               <button
                 onClick={handelSignInWithGoogle}
-                className="btn bg-white text-black border-[#e5e5e5]"
+                className="btn text-black border-[#e5e5e5] w-full bg-sky-100"
               >
                 <svg
                   aria-label="Google logo"

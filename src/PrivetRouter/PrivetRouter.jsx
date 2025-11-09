@@ -9,7 +9,7 @@ const PrivetRouter = ({ children }) => {
   if (loader) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <Atom color="#32cd32" size="medium" text="" textColor="" />
+        <Atom color="#0EA5E9" size="medium" text="" textColor="" />
       </div>
     );
   }

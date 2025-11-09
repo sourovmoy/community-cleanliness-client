@@ -60,7 +60,7 @@ const Navbar = () => {
             </ul>
           </div>
           <p className="text-xl sm:text-2xl font-bold">
-            C<span className="text-primary">C&I</span>RP
+            C<span className="heading-primary">C&I</span>RP
           </p>
         </div>
         <div className="navbar-end sm:navbar-center  hidden lg:flex">
@@ -86,7 +86,7 @@ const Navbar = () => {
         </div>
         <div className="navbar-end sm:hidden">
           {loader ? (
-            <span className="loading loading-spinner loading-md"></span>
+            <span className="loading loading-spinner  loading-md"></span>
           ) : user ? (
             <Link onClick={handelSignOut} className="btn-primary">
               Logout

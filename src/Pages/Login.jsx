@@ -1,12 +1,14 @@
 import React, { useRef, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import useAuth from "../Hooks/useAuth";
 import Swal from "sweetalert2";
 import useAxiosInstance from "../Hooks/useAxiosInstance";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const emailRef = useRef(null);
+  const location = useLocation;
   const navigate = useNavigate();
   const axiosInstance = useAxiosInstance();
   const {
@@ -48,6 +50,7 @@ const Login = () => {
           email: res.user.email,
           photoURL: res.user.photoURL,
         };
+        navigate("/");
         axiosInstance.post("/user", newUser).then((res) => {
           if (res.data.insertedId) {
             setUser(res.data);
@@ -61,14 +64,16 @@ const Login = () => {
           }
         });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => toast.error(err.message));
   };
 
   return (
     <div className="h-[80vh] flex justify-center items-center">
       <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-        <div className="card-body">
-          <h3 className="text-3xl font-bold text-center ">Login</h3>
+        <div className="card-body bg-sky-50">
+          <h3 className="text-3xl text-sky-700 font-bold text-center ">
+            Login
+          </h3>
           <form onSubmit={handelSignin}>
             <fieldset className="fieldset">
               <label className="label">Email</label>
@@ -97,14 +102,14 @@ const Login = () => {
                   {show ? <FaEyeSlash /> : <FaEye />}
                 </span>
               </div>
-              <button className="btn bg-linear-to-r from-[#3b8132] to-[#72bf6a] hover:scale-105 mt-4">
+              <button className="btn btn-primary border-0 hover:scale-105 mt-4">
                 Login
               </button>
             </fieldset>
           </form>
           <Link to={"/register"}>
             Create New Account ?{" "}
-            <span className="text-green-500">Registration</span>
+            <span className="text-sky-700">Registration</span>
           </Link>
           {user && <p className="text-green-500">Successfully Sign In</p>}
           {error && <p className="text-red-500">{error}</p>}
@@ -115,7 +120,7 @@ const Login = () => {
           </div>
           <button
             onClick={handelGoogleSingIn}
-            className="btn bg-white text-black border-[#e5e5e5]"
+            className="btn bg-sky-100 text-black border-[#e5e5e5]"
           >
             <svg
               aria-label="Google logo"
