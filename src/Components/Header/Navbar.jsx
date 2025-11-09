@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router";
 import useAuth from "../../Hooks/useAuth";
 
 const Navbar = () => {
-  const { user } = useAuth();
+  const { user, signOutFunc, loader } = useAuth();
   const links = (
     <>
       <li className="font-semibold">
@@ -12,47 +12,29 @@ const Navbar = () => {
       <li className="font-semibold">
         <NavLink to={"/all-issues"}>All Issues</NavLink>
       </li>
-      <li className="font-semibold">
-        <NavLink to={"/add-issues"}>Add Issues</NavLink>
-      </li>
-      <li className="font-semibold">
-        <NavLink to={"/my-issues"}>My Issues</NavLink>
-      </li>
-      <li className="font-semibold">
-        <NavLink to={"/my-contribution"}>My Contribution</NavLink>
-      </li>
-      {!user && (
+      {user && (
         <>
           <li className="font-semibold">
-            <Link
-              to={"/login"}
-              className="btn bg-gradient-to-r from-[#3b8132] to-[#72bf6a] hover:scale-105 mr-2"
-            >
-              Login
-            </Link>
+            <NavLink to={"/add-issues"}>Add Issues</NavLink>
           </li>
           <li className="font-semibold">
-            <Link
-              to={"/register"}
-              className="btn bg-gradient-to-r from-[#3b8132] to-[#72bf6a] hover:scale-105 "
-            >
-              Register
-            </Link>
+            <NavLink to={"/my-issues"}>My Issues</NavLink>
+          </li>
+          <li className="font-semibold">
+            <NavLink to={"/my-contribution"}>My Contribution</NavLink>
           </li>
         </>
       )}
-      {user && (
-        <Link className="btn bg-gradient-to-r from-[#3b8132] to-[#72bf6a] hover:scale-105">
-          Logout
-        </Link>
-      )}
     </>
   );
+  const handelSignOut = () => {
+    signOutFunc().then().catch();
+  };
   return (
     <div>
-      <div className="navbar shadow-sm px-3 sm:px-10 sticky bg-transparent">
+      <div className="navbar shadow-sm px-3 sm:px-10 sticky">
         <div className="navbar-start">
-          <div className="dropdown">
+          <div className="dropdown ">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -77,29 +59,44 @@ const Navbar = () => {
               {links}
             </ul>
           </div>
-          <p className="text-xl">CCIRP</p>
+          <p className="text-xl sm:text-2xl font-bold">
+            C<span className="text-primary">C&I</span>RP
+          </p>
         </div>
-        <div className="navbar-end md:navbar-center  hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">{links}</ul>
+        <div className="navbar-end sm:navbar-center  hidden lg:flex">
+          <ul className="menu menu-horizontal px-1 items-center">
+            {links}
+            {loader ? (
+              <span className="loading loading-spinner loading-md"></span>
+            ) : user ? (
+              <Link onClick={handelSignOut} className="btn-primary">
+                Logout
+              </Link>
+            ) : (
+              <div>
+                <Link to={"/login"} className="btn-primary mr-2">
+                  Login
+                </Link>
+                <Link to={"/register"} className="btn-primary">
+                  Register
+                </Link>
+              </div>
+            )}
+          </ul>
         </div>
-        <div className="navbar-end md:hidden">
-          {user && (
-            <Link className="btn bg-gradient-to-r from-[#3b8132] to-[#72bf6a] hover:scale-105">
+        <div className="navbar-end sm:hidden">
+          {loader ? (
+            <span className="loading loading-spinner loading-md"></span>
+          ) : user ? (
+            <Link onClick={handelSignOut} className="btn-primary">
               Logout
             </Link>
-          )}
-          {!user && (
+          ) : (
             <div>
-              <Link
-                to={"/login"}
-                className="btn bg-gradient-to-r from-[#3b8132] to-[#72bf6a] hover:scale-105"
-              >
+              <Link to={"/login"} className="btn-primary mr-2">
                 Login
               </Link>
-              <Link
-                to={"/register"}
-                className="btn bg-gradient-to-r from-[#3b8132] to-[#72bf6a] hover:scale-105"
-              >
+              <Link to={"/register"} className="btn-primary">
                 Register
               </Link>
             </div>

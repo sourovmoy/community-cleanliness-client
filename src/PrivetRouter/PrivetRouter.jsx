@@ -8,7 +8,7 @@ const PrivetRouter = ({ children }) => {
   const { user, loader } = useAuth();
   if (loader) {
     return (
-      <div>
+      <div className="flex justify-center items-center min-h-screen">
         <Atom color="#32cd32" size="medium" text="" textColor="" />
       </div>
     );
@@ -18,7 +18,7 @@ const PrivetRouter = ({ children }) => {
     return <Navigate to={"/login"} state={location.pathname}></Navigate>;
   }
 
-  return <div>{{ children }}</div>;
+  return <div>{children}</div>;
 };
 
 export default PrivetRouter;
