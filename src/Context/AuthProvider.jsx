@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AuthContext } from "./AuthContext";
 import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
+  onAuthStateChanged,
   sendEmailVerification,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
@@ -48,6 +49,7 @@ const AuthProvider = ({ children }) => {
     setLoader(true);
     return signOut(auth);
   };
+
   const authInfo = {
     createUserWithEmailAndPasswordFunc,
     sendEmailVerificationFunc,
@@ -63,8 +65,19 @@ const AuthProvider = ({ children }) => {
     loader,
     setLoader,
   };
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setLoader(false);
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
-  return <AuthContext value={authInfo}>{children}</AuthContext>;
+  return (
+    <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
+  );
 };
 
 export default AuthProvider;
