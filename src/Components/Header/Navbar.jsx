@@ -9,6 +9,18 @@ const Navbar = () => {
       <li className="font-semibold">
         <NavLink to={"/"}>Home</NavLink>
       </li>
+      <li className="font-semibold">
+        <NavLink to={"/all-issues"}>All Issues</NavLink>
+      </li>
+      <li className="font-semibold">
+        <NavLink to={"/add-issues"}>Add Issues</NavLink>
+      </li>
+      <li className="font-semibold">
+        <NavLink to={"/my-issues"}>My Issues</NavLink>
+      </li>
+      <li className="font-semibold">
+        <NavLink to={"/my-contribution"}>My Contribution</NavLink>
+      </li>
       {!user && (
         <>
           <li className="font-semibold">
