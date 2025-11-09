@@ -4,20 +4,20 @@ import { NavLink } from "react-router";
 const Navbar = () => {
   const links = (
     <>
-      <li>
+      <li className="font-semibold">
         <NavLink to={"/"}>Home</NavLink>
       </li>
-      <li>
+      <li className="font-semibold">
         <NavLink to={"/login"}>Login</NavLink>
       </li>
-      <li>
+      <li className="font-semibold">
         <NavLink to={"/resister"}>Register</NavLink>
       </li>
     </>
   );
   return (
     <div>
-      <div className="navbar bg-base-100 shadow-sm">
+      <div className="navbar shadow-sm px-3 sm:px-10 sticky bg-transparent">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -44,12 +44,12 @@ const Navbar = () => {
               {links}
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl">daisyUI</a>
+          <p className="text-xl">CCIRP</p>
         </div>
-        <div className="navbar-center hidden lg:flex">
+        <div className="navbar-end md:navbar-center  hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{links}</ul>
         </div>
-        <div className="navbar-end">
+        <div className="navbar-end md:hidden">
           <a className="btn">Button</a>
         </div>
       </div>
