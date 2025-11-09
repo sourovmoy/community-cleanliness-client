@@ -1,7 +1,310 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
+import useAxiosInstance from "../Hooks/useAxiosInstance";
+import useAuth from "../Hooks/useAuth";
 
 const MyIssues = () => {
-  return <div>MyIssues MyIssues</div>;
+  const updateModal = useRef(null);
+  const { user } = useAuth();
+  const axiosInstance = useAxiosInstance();
+  const [myIssues, setMyIssues] = useState([]);
+
+  useEffect(() => {
+    axiosInstance
+      .get(`/issues?email=${user?.email}`)
+      .then((res) => setMyIssues(res.data));
+  }, [axiosInstance, user, setMyIssues]);
+
+  const handelOpenModal = () => {
+    updateModal.current.showModal();
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const title = e.target.title.value;
+    const category = e.target.category.value;
+    const location = e.target.location.value;
+    const description = e.target.description.value;
+    const image = e.target.image.value;
+    const amount = Number(e.target.amount.value);
+    const status = "ongoing";
+    const date = new Date().toISOString();
+    const email = e.target.email.value;
+
+    const updateIssue = {
+      title,
+      category,
+      location,
+      description,
+      image,
+      amount,
+      status,
+      date,
+      email,
+    };
+    console.log(updateIssue);
+  };
+  return (
+    <div>
+      <div className="p-4 sm:p-8">
+        <h1 className="text-2xl font-bold text-center mb-6 heading-primary">
+          My Submitted Issues
+        </h1>
+        {myIssues.length === 0 ? (
+          <p className="text-center text-gray-500">No issues found.</p>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="table w-full bg-white rounded-xl overflow-hidden shadow-md">
+              <thead className="bg-sky-700 text-white">
+                <tr>
+                  <th>Image</th>
+                  <th>Title</th>
+                  <th>Category</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {myIssues.map((issue) => (
+                  <tr key={issue._id} className="hover:bg-sky-50 items-center">
+                    <td>
+                      <img
+                        src={issue.image}
+                        alt={issue.title}
+                        className="w-16 h-16 rounded-md object-cover"
+                      />
+                    </td>
+                    <td className="font-medium">{issue.title}</td>
+                    <td>{issue.category}</td>
+                    <td>${issue.amount}</td>
+                    <td>
+                      <span
+                        className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                          issue.status === "ongoing"
+                            ? "bg-yellow-200 text-yellow-800"
+                            : "bg-green-200 text-green-800"
+                        }`}
+                      >
+                        {issue.status}
+                      </span>
+                    </td>
+                    <td className="flex flex-wrap gap-2 mt-4">
+                      <button
+                        onClick={handelOpenModal}
+                        className="bg-sky-600 hover:bg-sky-700 text-white px-3 py-1 rounded-md text-sm"
+                      >
+                        Update
+                      </button>
+
+                      <dialog
+                        ref={updateModal}
+                        className="modal modal-bottom sm:modal-middle"
+                      >
+                        <div className="modal-box">
+                          <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-sky-50 via-green-50 to-sky-100 px-4 py-8">
+                            <form
+                              onSubmit={handleSubmit}
+                              className="w-full max-w-xl bg-white/90 backdrop-blur-md shadow-2xl rounded-2xl p-8 md:p-10 space-y-6 border border-sky-100"
+                            >
+                              <h2 className="text-3xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-green-700 to-sky-600">
+                                Update Issue
+                              </h2>
+
+                              <div>
+                                <label className="block text-gray-700 mb-1 font-medium">
+                                  Issue Title
+                                </label>
+                                <input
+                                  type="text"
+                                  name="title"
+                                  placeholder="e.g. Overflowing garbage near park"
+                                  className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-700 placeholder-gray-400"
+                                  required
+                                />
+                              </div>
+
+                              <div>
+                                <label className="block text-gray-700 mb-1 font-medium">
+                                  Category
+                                </label>
+                                <select
+                                  name="category"
+                                  className="w-full border border-gray-300 rounded-lg px-4 py-2.5 bg-white focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent text-gray-700"
+                                  required
+                                >
+                                  <option value="">Select a Category</option>
+                                  <option value="Garbage">Garbage</option>
+                                  <option value="Broken Footpath">
+                                    Broken Footpath
+                                  </option>
+                                  <option value="Illegal Dumping">
+                                    Illegal Dumping
+                                  </option>
+                                  <option value="Waterlogging">
+                                    Waterlogging
+                                  </option>
+                                </select>
+                              </div>
+
+                              <div>
+                                <label className="block text-gray-700 mb-1 font-medium">
+                                  Location
+                                </label>
+                                <input
+                                  type="text"
+                                  name="location"
+                                  placeholder="e.g. Mohakhali, Dhaka"
+                                  className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-sky-500 text-gray-700 placeholder-gray-400"
+                                  required
+                                />
+                              </div>
+
+                              <div>
+                                <label className="block text-gray-700 mb-1 font-medium">
+                                  Description
+                                </label>
+                                <textarea
+                                  name="description"
+                                  placeholder="Describe the issue in detail..."
+                                  rows="4"
+                                  className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-green-500 text-gray-700 placeholder-gray-400 resize-none"
+                                  required
+                                ></textarea>
+                              </div>
+
+                              <div>
+                                <label className="block text-gray-700 mb-1 font-medium">
+                                  Image URL
+                                </label>
+                                <input
+                                  type="url"
+                                  name="image"
+                                  placeholder="https://example.com/image.jpg"
+                                  className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-sky-500 text-gray-700 placeholder-gray-400"
+                                  required
+                                />
+                              </div>
+
+                              <div>
+                                <label className="block text-gray-700 mb-1 font-medium">
+                                  Suggested Fix Budget (৳)
+                                </label>
+                                <input
+                                  type="number"
+                                  name="amount"
+                                  placeholder="e.g. 500"
+                                  className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-green-500 text-gray-700 placeholder-gray-400"
+                                  required
+                                />
+                              </div>
+
+                              <div>
+                                <label className="block text-gray-700 mb-1 font-medium">
+                                  Reporter Email
+                                </label>
+                                <input
+                                  type="email"
+                                  name="email"
+                                  value={user?.email}
+                                  readOnly
+                                  className="w-full border border-gray-200 rounded-lg px-4 py-2.5 bg-gray-100 text-gray-500 cursor-not-allowed"
+                                />
+                              </div>
+
+                              <button
+                                type="submit"
+                                className="w-full bg-gradient-to-r from-green-600 to-sky-600 hover:from-green-700 hover:to-sky-700 text-white font-semibold py-3 rounded-xl shadow-md hover:shadow-xl transition-all transform hover:-translate-y-0.5"
+                              >
+                                Submit Issue
+                              </button>
+                            </form>
+                          </div>
+                          <div className="modal-action">
+                            <form method="dialog">
+                              {/* if there is a button in form, it will close the modal */}
+                              <button className="btn btn-primary border-0">
+                                Close
+                              </button>
+                            </form>
+                          </div>
+                        </div>
+                      </dialog>
+                      <button
+                        // onClick={() => handleDelete(issue._id)}
+                        className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-md text-sm"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        {/* {selectedIssue && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+            <div className="bg-white p-6 rounded-xl w-11/12 sm:w-96 shadow-lg">
+              <h2 className="text-xl font-semibold mb-4 text-center">
+                Update Issue
+              </h2>
+              <form onSubmit={handleUpdate} className="space-y-3">
+                <input
+                  name="title"
+                  defaultValue={selectedIssue.title}
+                  className="input input-bordered w-full"
+                  placeholder="Title"
+                />
+                <input
+                  name="category"
+                  defaultValue={selectedIssue.category}
+                  className="input input-bordered w-full"
+                  placeholder="Category"
+                />
+                <input
+                  name="amount"
+                  type="number"
+                  defaultValue={selectedIssue.amount}
+                  className="input input-bordered w-full"
+                  placeholder="Amount"
+                />
+                <textarea
+                  name="description"
+                  defaultValue={selectedIssue.description}
+                  className="textarea textarea-bordered w-full"
+                  placeholder="Description"
+                />
+                <select
+                  name="status"
+                  defaultValue={selectedIssue.status}
+                  className="select select-bordered w-full"
+                >
+                  <option value="ongoing">Ongoing</option>
+                  <option value="ended">Ended</option>
+                </select>
+                <div className="flex justify-end gap-2 mt-3">
+                  <button
+                    type="button"
+                    onClick={() => setSelectedIssue(null)}
+                    className="btn bg-gray-200 hover:bg-gray-300 text-gray-700"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="btn bg-gradient-to-r from-sky-700 to-sky-500 text-white"
+                  >
+                    Save Changes
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )} */}
+      </div>
+    </div>
+  );
 };
 
 export default MyIssues;

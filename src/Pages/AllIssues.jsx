@@ -30,9 +30,18 @@ const AllIssues = () => {
   }
   return (
     <div>
-      <h1 className="text-center text-3xl font-bold mt-5 sm:mt-10">
+      <motion.h1
+        initial={{ opacity: 0, x: -100 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        transition={{
+          duration: 1,
+          ease: "easeOut",
+        }}
+        viewport={{ once: true }}
+        className="text-center text-3xl font-bold mt-5 sm:mt-10"
+      >
         All <span className="heading-primary ">Issues</span>: {issues.length}
-      </h1>
+      </motion.h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-8 mt-5 sm:mt-14">
         {issues ? (
           issues.map((issue) => (

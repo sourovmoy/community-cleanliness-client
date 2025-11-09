@@ -8,7 +8,9 @@ import { toast } from "react-toastify";
 
 const Login = () => {
   const emailRef = useRef(null);
-  const location = useLocation;
+  const location = useLocation();
+  console.log(location);
+
   const navigate = useNavigate();
   const axiosInstance = useAxiosInstance();
   const {

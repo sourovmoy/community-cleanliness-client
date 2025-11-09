@@ -39,7 +39,6 @@ const Register = () => {
       toast.error("Inter Correct ImageURL");
       return;
     }
-
     createUserWithEmailAndPasswordFunc(email, password)
       .then((res) => {
         toast("Successfully Sign Up");
@@ -48,7 +47,7 @@ const Register = () => {
         updateProfileFunc(displayName, photoURL)
           .then(() => {
             setLoader(false);
-            setUser(res.user);
+            setUser({ ...res.user, displayName, photoURL });
           })
           .catch((err) => {
             toast.error(err.message);
@@ -123,7 +122,7 @@ const Register = () => {
                   </span>
                 </div>
                 <button className="btn border-0 btn-primary hover:scale-105 mt-4">
-                  Login
+                  Register
                 </button>
               </fieldset>
             </form>
