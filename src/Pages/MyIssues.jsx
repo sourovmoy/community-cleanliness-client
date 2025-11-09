@@ -20,15 +20,16 @@ const MyIssues = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     const title = e.target.title.value;
     const category = e.target.category.value;
-    const location = e.target.location.value;
     const description = e.target.description.value;
     const image = e.target.image.value;
     const amount = Number(e.target.amount.value);
     const status = "ongoing";
     const date = new Date().toISOString();
     const email = e.target.email.value;
+    const _id = e.target.id.value;
 
     const updateIssue = {
       title,
@@ -41,7 +42,10 @@ const MyIssues = () => {
       date,
       email,
     };
-    console.log(updateIssue);
+
+    axiosInstance
+      .patch(`/issues/${_id}`, updateIssue)
+      .then((res) => console.log(res));
   };
   return (
     <div>
@@ -109,7 +113,11 @@ const MyIssues = () => {
                               <h2 className="text-3xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-green-700 to-sky-600">
                                 Update Issue
                               </h2>
-
+                              <input
+                                type="hidden"
+                                name="id"
+                                value={issue._id}
+                              />
                               <div>
                                 <label className="block text-gray-700 mb-1 font-medium">
                                   Issue Title
@@ -144,19 +152,6 @@ const MyIssues = () => {
                                     Waterlogging
                                   </option>
                                 </select>
-                              </div>
-
-                              <div>
-                                <label className="block text-gray-700 mb-1 font-medium">
-                                  Location
-                                </label>
-                                <input
-                                  type="text"
-                                  name="location"
-                                  placeholder="e.g. Mohakhali, Dhaka"
-                                  className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-sky-500 text-gray-700 placeholder-gray-400"
-                                  required
-                                />
                               </div>
 
                               <div>
@@ -213,6 +208,7 @@ const MyIssues = () => {
 
                               <button
                                 type="submit"
+                                // onClick={}
                                 className="w-full bg-gradient-to-r from-green-600 to-sky-600 hover:from-green-700 hover:to-sky-700 text-white font-semibold py-3 rounded-xl shadow-md hover:shadow-xl transition-all transform hover:-translate-y-0.5"
                               >
                                 Submit Issue
@@ -242,66 +238,6 @@ const MyIssues = () => {
             </table>
           </div>
         )}
-
-        {/* {selectedIssue && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-            <div className="bg-white p-6 rounded-xl w-11/12 sm:w-96 shadow-lg">
-              <h2 className="text-xl font-semibold mb-4 text-center">
-                Update Issue
-              </h2>
-              <form onSubmit={handleUpdate} className="space-y-3">
-                <input
-                  name="title"
-                  defaultValue={selectedIssue.title}
-                  className="input input-bordered w-full"
-                  placeholder="Title"
-                />
-                <input
-                  name="category"
-                  defaultValue={selectedIssue.category}
-                  className="input input-bordered w-full"
-                  placeholder="Category"
-                />
-                <input
-                  name="amount"
-                  type="number"
-                  defaultValue={selectedIssue.amount}
-                  className="input input-bordered w-full"
-                  placeholder="Amount"
-                />
-                <textarea
-                  name="description"
-                  defaultValue={selectedIssue.description}
-                  className="textarea textarea-bordered w-full"
-                  placeholder="Description"
-                />
-                <select
-                  name="status"
-                  defaultValue={selectedIssue.status}
-                  className="select select-bordered w-full"
-                >
-                  <option value="ongoing">Ongoing</option>
-                  <option value="ended">Ended</option>
-                </select>
-                <div className="flex justify-end gap-2 mt-3">
-                  <button
-                    type="button"
-                    onClick={() => setSelectedIssue(null)}
-                    className="btn bg-gray-200 hover:bg-gray-300 text-gray-700"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    className="btn bg-gradient-to-r from-sky-700 to-sky-500 text-white"
-                  >
-                    Save Changes
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        )} */}
       </div>
     </div>
   );
