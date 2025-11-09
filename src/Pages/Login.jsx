@@ -1,16 +1,43 @@
 import React, { useRef, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import useAuth from "../Hooks/useAuth";
 import Swal from "sweetalert2";
 import useAxiosInstance from "../Hooks/useAxiosInstance";
 
 const Login = () => {
   const emailRef = useRef(null);
+  const navigate = useNavigate();
   const axiosInstance = useAxiosInstance();
-  const { signInWithPopupFunc, setUser, setError } = useAuth();
-
+  const {
+    setLoader,
+    error,
+    signInWithPopupFunc,
+    setUser,
+    setError,
+    user,
+    signInWithEmailAndPasswordFunc,
+  } = useAuth();
   const [show, setShow] = useState(false);
+  console.log(user);
+
+  const handelSignin = (e) => {
+    setError("");
+    setUser(null);
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    signInWithEmailAndPasswordFunc(email, password)
+      .then(() => {
+        setLoader(false);
+        navigate("/");
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoader(false);
+      });
+  };
+
   const handelGoogleSingIn = () => {
     setUser(null);
     setError("");
@@ -22,8 +49,8 @@ const Login = () => {
           photoURL: res.user.photoURL,
         };
         axiosInstance.post("/user", newUser).then((res) => {
-          console.log(res);
           if (res.data.insertedId) {
+            setUser(res.data);
             Swal.fire({
               position: "top-end",
               icon: "success",
@@ -42,9 +69,7 @@ const Login = () => {
       <div className="card bg-transparent w-full max-w-sm shrink-0 shadow-2xl">
         <div className="card-body">
           <h3 className="text-3xl font-bold text-center ">Login</h3>
-          <form
-          // onSubmit={handelSignin}
-          >
+          <form onSubmit={handelSignin}>
             <fieldset className="fieldset">
               <label className="label">Email</label>
               <input
@@ -72,28 +97,17 @@ const Login = () => {
                   {show ? <FaEyeSlash /> : <FaEye />}
                 </span>
               </div>
-              <div>
-                <Link
-                  target="_blank"
-                  to={"https://mail.google.com/mail/u/0/#inbox"}
-                  type="button"
-                  //   onClick={handelForgetPassword}
-                  className="link link-hover"
-                >
-                  Forgot password?
-                </Link>
-              </div>
               <button className="btn bg-linear-to-r from-[#3b8132] to-[#72bf6a] hover:scale-105 mt-4">
                 Login
               </button>
             </fieldset>
           </form>
-          <Link to={"/auth/signup"}>
+          <Link to={"/register"}>
             Create New Account ?{" "}
             <span className="text-green-500">Registration</span>
           </Link>
-          {/* {user && <p className="text-green-500">Successfully Sign In</p>}
-          {error && <p className="text-red-500">{error}</p>} */}
+          {user && <p className="text-green-500">Successfully Sign In</p>}
+          {error && <p className="text-red-500">{error}</p>}
           <div className="flex items-center gap-3">
             <p className="border-b ml-14 w-full "></p>
             <p className="text-center font-bold">OR</p>

@@ -1,18 +1,39 @@
 import React from "react";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
+import useAuth from "../../Hooks/useAuth";
 
 const Navbar = () => {
+  const { user } = useAuth();
   const links = (
     <>
       <li className="font-semibold">
         <NavLink to={"/"}>Home</NavLink>
       </li>
-      <li className="font-semibold">
-        <NavLink to={"/login"}>Login</NavLink>
-      </li>
-      <li className="font-semibold">
-        <NavLink to={"/resister"}>Register</NavLink>
-      </li>
+      {!user && (
+        <>
+          <li className="font-semibold">
+            <Link
+              to={"/login"}
+              className="btn bg-gradient-to-r from-[#3b8132] to-[#72bf6a] hover:scale-105 mr-2"
+            >
+              Login
+            </Link>
+          </li>
+          <li className="font-semibold">
+            <Link
+              to={"/register"}
+              className="btn bg-gradient-to-r from-[#3b8132] to-[#72bf6a] hover:scale-105 "
+            >
+              Register
+            </Link>
+          </li>
+        </>
+      )}
+      {user && (
+        <Link className="btn bg-gradient-to-r from-[#3b8132] to-[#72bf6a] hover:scale-105">
+          Logout
+        </Link>
+      )}
     </>
   );
   return (
@@ -39,7 +60,7 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex="-1"
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow items-center"
             >
               {links}
             </ul>
@@ -50,7 +71,27 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1">{links}</ul>
         </div>
         <div className="navbar-end md:hidden">
-          <a className="btn">Button</a>
+          {user && (
+            <Link className="btn bg-gradient-to-r from-[#3b8132] to-[#72bf6a] hover:scale-105">
+              Logout
+            </Link>
+          )}
+          {!user && (
+            <div>
+              <Link
+                to={"/login"}
+                className="btn bg-gradient-to-r from-[#3b8132] to-[#72bf6a] hover:scale-105"
+              >
+                Login
+              </Link>
+              <Link
+                to={"/register"}
+                className="btn bg-gradient-to-r from-[#3b8132] to-[#72bf6a] hover:scale-105"
+              >
+                Register
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </div>
