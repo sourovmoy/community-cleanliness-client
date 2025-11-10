@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link, useLocation, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import useAuth from "../Hooks/useAuth";
 import Swal from "sweetalert2";
 import useAxiosInstance from "../Hooks/useAxiosInstance";
@@ -8,8 +8,6 @@ import { toast } from "react-toastify";
 
 const Login = () => {
   const emailRef = useRef(null);
-  const location = useLocation();
-  console.log(location);
 
   const navigate = useNavigate();
   const axiosInstance = useAxiosInstance();
@@ -76,7 +74,7 @@ const Login = () => {
           <h3 className="text-3xl text-sky-700 font-bold text-center ">
             Login
           </h3>
-          <form onSubmit={handelSignin}>
+          <form onSubmit={handelSignin}> 
             <fieldset className="fieldset">
               <label className="label">Email</label>
               <input

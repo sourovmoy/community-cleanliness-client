@@ -14,21 +14,21 @@ const Navbar = () => {
 
   const links = (
     <>
-      <li className="font-semibold ">
+      <li className="font-semibold text-sky-400">
         <NavLink to={"/"}>Home</NavLink>
       </li>
-      <li className="font-semibold ">
+      <li className="font-semibold text-sky-400">
         <NavLink to={"/all-issues"}>All Issues</NavLink>
       </li>
       {user && (
         <>
-          <li className="font-semibold ">
+          <li className="font-semibold text-sky-400">
             <NavLink to={"/add-issues"}>Add Issues</NavLink>
           </li>
-          <li className="font-semibold ">
+          <li className="font-semibold text-sky-400">
             <NavLink to={"/my-issues"}>My Issues</NavLink>
           </li>
-          <li className="font-semibold ">
+          <li className="font-semibold text-sky-400">
             <NavLink to={"/my-contribution"}>My Contribution</NavLink>
           </li>
         </>
@@ -72,12 +72,12 @@ const Navbar = () => {
           </ul>
         </div>
 
-        <p className="text-xl sm:text-2xl font-bold">
+        <Link to={"/"} className="text-xl sm:text-2xl font-bold">
           C<span className="heading-primary">C&I</span>RP
-        </p>
+        </Link>
       </div>
 
-      <div className="navbar-center hidden lg:flex">
+      <div className="navbar-center sm:navbar-end hidden lg:flex">
         <ul className="menu menu-horizontal px-1 items-center gap-2">
           <input
             onClick={handelTheme}

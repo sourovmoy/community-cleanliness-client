@@ -1,16 +1,40 @@
-# React + Vite
+# 🌿 GreenNest – Community Issue Management Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Live Site URL:** [https://your-live-url.vercel.app](https://your-live-url.vercel.app)
 
-Currently, two official plugins are available:
+## 📖 About the Project
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+GreenNest is a community-driven web platform that allows users to report, track, and manage local environmental or infrastructural issues — such as garbage, road damage, or waterlogging.  
+It empowers citizens to take part in maintaining a cleaner, safer, and greener community.
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🚀 Features
 
-## Expanding the ESLint configuration
+- 🧾 **Report Issues:** Users can submit detailed reports with title, category, location, image, and description.
+- 🧍 **User Dashboard:** Displays issues submitted by the logged-in user only for secure data management.
+- ✏️ **Update & Delete:** Easily update or delete your own reported issues through interactive modals.
+- 💸 **Contribution Tracking:** Users can view their cleanup payment history in a responsive table format.
+- 📄 **PDF Report Download:** Generate and download contribution reports using **jsPDF** for record-keeping.
+- 🌈 **Responsive Design:** Fully optimized for desktop, tablet, and mobile devices using **Tailwind CSS**.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🛠️ Technologies Used
+
+- React.js
+- Tailwind CSS
+- DaisyUI
+- Express.js
+- MongoDB
+- jsPDF
+
+---
+
+## 💚 Contribution
+
+Feel free to fork, contribute, or suggest improvements through pull requests. Together, we can build a greener community!
+
+---
+
+**Developed by:** Sourovmoy Sanju 🌱

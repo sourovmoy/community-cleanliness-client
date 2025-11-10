@@ -79,7 +79,7 @@ const AddIssues = () => {
         <div className="flex justify-center items-center min-h-screen  p-4">
           <form
             onSubmit={handleSubmit}
-            className="w-full max-w-lg bg-sky-50 shadow-lg rounded-2xl p-8 space-y-5"
+            className="w-full max-w-lg shadow-lg rounded-2xl p-8 space-y-5"
           >
             <h2 className="text-2xl font-semibold heading-primary mb-4 text-center">
               Report an Issue

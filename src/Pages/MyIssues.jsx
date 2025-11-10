@@ -3,8 +3,10 @@ import useAxiosInstance from "../Hooks/useAxiosInstance";
 import useAuth from "../Hooks/useAuth";
 import Swal from "sweetalert2";
 import * as motion from "motion/react-client";
+import { useNavigate } from "react-router";
 
 const MyIssues = () => {
+  const navigate = useNavigate();
   const { user, setLoader } = useAuth();
   const [refresh, setRefresh] = useState(true);
   const [id, setId] = useState(null);
@@ -54,6 +56,7 @@ const MyIssues = () => {
       if (res.data.acknowledged) {
         document.getElementById(id).close();
         setRefresh(!refresh);
+        navigate("/my-contribution");
       }
       Swal.fire({
         title: "Are you sure?",
@@ -110,16 +113,26 @@ const MyIssues = () => {
         viewport={{ once: true }}
         className="p-4 sm:p-8"
       >
-        <h1 className="text-2xl font-bold text-center mb-6 ">
+        <motion.h1
+          initial={{ opacity: 0, x: -100 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{
+            duration: 1,
+            ease: "easeOut",
+          }}
+          viewport={{ once: true }}
+          className="text-3xl font-bold text-center mt-5 sm:mt-10 mb-10"
+        >
           My <span className="heading-primary">Issues</span> :({myIssues.length}
           )
-        </h1>
+        </motion.h1>
+
         {myIssues.length === 0 ? (
           <p className="text-center text-gray-500">No issues found.</p>
         ) : (
           <div className="overflow-x-auto">
-            <table className="table w-full bg-white rounded-xl overflow-hidden shadow-md">
-              <thead className="bg-sky-700 text-white">
+            <table className="table w-full rounded-xl overflow-hidden shadow-md">
+              <thead className="bg-sky-700 ">
                 <tr>
                   <th>Image</th>
                   <th>Title</th>
@@ -131,7 +144,7 @@ const MyIssues = () => {
               </thead>
               <tbody>
                 {myIssues.map((issue) => (
-                  <tr key={issue._id} className="hover:bg-sky-50 items-center">
+                  <tr key={issue._id} className=" items-center">
                     <td>
                       <img
                         src={issue.image}
