@@ -2,24 +2,24 @@ import React, { useEffect, useRef, useState } from "react";
 import useAxiosInstance from "../Hooks/useAxiosInstance";
 import useAuth from "../Hooks/useAuth";
 import Swal from "sweetalert2";
+import * as motion from "motion/react-client";
 
 const MyIssues = () => {
-  const updateModal = useRef(null);
-  const [refresh, setRefresh] = useState(null);
-
   const { user } = useAuth();
+  const [refresh, setRefresh] = useState(true);
+  const [id, setId] = useState(null);
   const axiosInstance = useAxiosInstance();
   const [myIssues, setMyIssues] = useState([]);
 
   useEffect(() => {
     axiosInstance.get(`/issues?email=${user?.email}`).then((res) => {
       setMyIssues(res.data);
-      setRefresh(true);
     });
-  }, [axiosInstance, user, setMyIssues, setRefresh]);
+  }, [axiosInstance, user, setMyIssues, refresh]);
 
-  const handelOpenModal = () => {
-    updateModal.current.showModal();
+  const handelOpenModal = (id) => {
+    setId(id);
+    document.getElementById(id).showModal();
   };
 
   const handleSubmit = (e) => {
@@ -48,11 +48,12 @@ const MyIssues = () => {
     };
 
     axiosInstance.patch(`/issues/${_id}`, updateIssue).then((res) => {
+      console.log(res.data);
+
       if (res.data.acknowledged) {
-        updateModal.current.close();
+        document.getElementById(id).close();
         setRefresh(!refresh);
       }
-
       Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -72,9 +73,42 @@ const MyIssues = () => {
       });
     });
   };
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosInstance.delete(`/issues/${id}`).then((res) => {
+          if (res.data.acknowledged) {
+            setRefresh(!refresh);
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success",
+            });
+          }
+        });
+      }
+    });
+  };
   return (
     <div>
-      <div className="p-4 sm:p-8">
+      <motion.div
+        initial={{ opacity: 0, y: 80 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{
+          duration: 1,
+          ease: "easeOut",
+        }}
+        viewport={{ once: true }}
+        className="p-4 sm:p-8"
+      >
         <h1 className="text-2xl font-bold text-center mb-6 heading-primary">
           My Submitted Issues
         </h1>
@@ -119,14 +153,14 @@ const MyIssues = () => {
                     </td>
                     <td className="flex flex-wrap gap-2 mt-4">
                       <button
-                        onClick={handelOpenModal}
+                        onClick={() => handelOpenModal(issue._id)}
                         className="bg-sky-600 hover:bg-sky-700 text-white px-3 py-1 rounded-md text-sm"
                       >
                         Update
                       </button>
 
                       <dialog
-                        ref={updateModal}
+                        id={issue._id}
                         className="modal modal-bottom sm:modal-middle"
                       >
                         <div className="modal-box">
@@ -256,7 +290,7 @@ const MyIssues = () => {
                       </dialog>
 
                       <button
-                        // onClick={() => handleDelete(issue._id)}
+                        onClick={() => handleDelete(issue._id)}
                         className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-md text-sm"
                       >
                         Delete
@@ -268,7 +302,7 @@ const MyIssues = () => {
             </table>
           </div>
         )}
-      </div>
+      </motion.div>
     </div>
   );
 };
