@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router";
 import useAuth from "../../Hooks/useAuth";
 
 const Navbar = () => {
   const { user, signOutFunc, loader } = useAuth();
-  console.log(user);
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+
+  useEffect(() => {
+    const html = document.querySelector("html");
+    html.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
 
   const links = (
     <>
@@ -28,6 +34,11 @@ const Navbar = () => {
   );
   const handelSignOut = () => {
     signOutFunc().then().catch();
+  };
+
+  const handelTheme = (e) => {
+    const toggle = e.target.checked;
+    setTheme(toggle ? "dark" : "light");
   };
   return (
     <div className="navbar shadow-sm px-3 sm:px-10">
@@ -65,6 +76,13 @@ const Navbar = () => {
 
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1 items-center gap-2">
+          <input
+            onClick={handelTheme}
+            type="checkbox"
+            defaultChecked={localStorage.getItem("theme")}
+            className="toggle"
+          />
+
           {links}
 
           {loader ? (
@@ -80,7 +98,7 @@ const Navbar = () => {
               </div>
               <ul
                 tabIndex="-1"
-                className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
+                className="dropdown-content menu bg-base-100 rounded-box z-1 w-auto p-2 shadow-sm"
               >
                 <li>
                   <p className="font-semibold text-sky-400">
@@ -91,9 +109,9 @@ const Navbar = () => {
                   <p className="font-semibold text-sky-400">{user?.email}</p>
                 </li>
                 <li>
-                  <Link onClick={handelSignOut} className="btn-primary">
+                  <button onClick={handelSignOut} className="btn-primary mx-2">
                     Logout
-                  </Link>
+                  </button>
                 </li>
               </ul>
             </div>
@@ -124,7 +142,7 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex="-1"
-              className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
+              className="dropdown-content menu bg-base-100 rounded-box z-1 p-2 shadow-sm"
             >
               <li>
                 <p className="font-semibold text-sky-400">

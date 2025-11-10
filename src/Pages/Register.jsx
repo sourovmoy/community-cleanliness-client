@@ -75,7 +75,7 @@ const Register = () => {
     <div>
       <div className="flex justify-center items-center my-5">
         <div className="card bg-transparent w-full max-w-sm shrink-0 shadow-2xl">
-          <div className="card-body bg-sky-50">
+          <div className="card-body">
             <h3 className="text-3xl font-bold text-center text-sky-700">
               Registration
             </h3>

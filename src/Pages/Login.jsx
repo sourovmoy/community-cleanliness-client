@@ -71,8 +71,8 @@ const Login = () => {
 
   return (
     <div className="h-[80vh] flex justify-center items-center">
-      <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-        <div className="card-body bg-sky-50">
+      <div className="card bg-base-200 w-full max-w-sm shrink-0 shadow-2xl">
+        <div className="card-body">
           <h3 className="text-3xl text-sky-700 font-bold text-center ">
             Login
           </h3>

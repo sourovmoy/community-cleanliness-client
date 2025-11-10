@@ -20,7 +20,7 @@ const IssueCard = ({ issue }) => {
         </div>
 
         <div className="p-5">
-          <p className="text-sm text-gray-500 dark:text-gray-300 mb-2 line-clamp-2">
+          <p className="text-sm text-base-300 dark:text-gray-300 mb-2 line-clamp-2">
             {issue.description}
           </p>
           {issue.status && (
@@ -31,8 +31,8 @@ const IssueCard = ({ issue }) => {
           )}
 
           <div className="flex items-center justify-between mt-3">
-            <div className="flex items-center text-yellow-500">
-              <span className="ml-1 text-sm font-medium text-gray-600 dark:text-gray-200">
+            <div className="flex items-center">
+              <span className="ml-1 text-sm font-medium text-base-200  ">
                 {issue.location}
               </span>
             </div>
@@ -79,9 +79,7 @@ const IssueCard = ({ issue }) => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                 <div className="flex flex-col">
                   <span className="text-gray-500 text-sm">📍 Location</span>
-                  <span className="font-medium text-gray-800">
-                    {issue.location}
-                  </span>
+                  <span className="font-medium ">{issue.location}</span>
                 </div>
 
                 <div className="flex flex-col">

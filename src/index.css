@@ -1,13 +1,14 @@
 @import "tailwindcss";
-@plugin "daisyui" {
-  /* themes: light --default, dark --prefersdark; */
-  themes: light --default;
-}
+@plugin "daisyui";
+
 @plugin "daisyui/theme" {
   name: "light";
   default: true;
   --color-primary: #3b8132;
   --color-secondary: teal;
+  --color-base-100: oklch(98% 0.02 240);
+  --color-base-200: oklch(95% 0.03 240);
+  --color-base-300: oklch(92% 0.04 240);
 }
 .btn-primary {
   @apply bg-gradient-to-r from-sky-800 to-sky-400 text-white font-semibold px-2 sm:px-5 py-2 rounded-lg transition-transform duration-200 hover:scale-105;

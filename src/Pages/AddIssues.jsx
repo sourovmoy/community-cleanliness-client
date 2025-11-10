@@ -45,7 +45,7 @@ const AddIssues = () => {
         if (result.isConfirmed) {
           Swal.fire("Issue Reported Successfully!", "", "success");
           e.target.reset();
-          navigate("/my-issues"); // Redirect user after success
+          navigate("/my-issues");
         } else if (result.isDenied) {
           Swal.fire("Submission canceled", "", "info");
         }
@@ -64,7 +64,7 @@ const AddIssues = () => {
         }}
         viewport={{ once: true }}
       >
-        <div className="flex justify-center items-center min-h-screen bg-gray-50 p-4">
+        <div className="flex justify-center items-center min-h-screen text-base-200 p-4">
           <form
             onSubmit={handleSubmit}
             className="w-full max-w-lg bg-sky-50 shadow-lg rounded-2xl p-8 space-y-5"
@@ -88,7 +88,7 @@ const AddIssues = () => {
               <label className="block text-gray-600 mb-1">Category</label>
               <select
                 name="category"
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-green-500"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2  focus:outline-none focus:ring-2 focus:ring-green-500"
                 required
               >
                 <option value="">Select a Category</option>
