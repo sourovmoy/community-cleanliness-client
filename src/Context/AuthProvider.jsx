@@ -32,7 +32,7 @@ const AuthProvider = ({ children }) => {
     setLoader(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
-  const updateProfileFunc = ({ displayName, photoURL }) => {
+  const updateProfileFunc = (displayName, photoURL) => {
     setLoader(true);
     return updateProfile(auth.currentUser, { displayName, photoURL });
   };

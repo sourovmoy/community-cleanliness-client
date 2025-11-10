@@ -1,18 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
 import useAxiosInstance from "../Hooks/useAxiosInstance";
 import useAuth from "../Hooks/useAuth";
+import Swal from "sweetalert2";
 
 const MyIssues = () => {
   const updateModal = useRef(null);
+  const [refresh, setRefresh] = useState(null);
+
   const { user } = useAuth();
   const axiosInstance = useAxiosInstance();
   const [myIssues, setMyIssues] = useState([]);
 
   useEffect(() => {
-    axiosInstance
-      .get(`/issues?email=${user?.email}`)
-      .then((res) => setMyIssues(res.data));
-  }, [axiosInstance, user, setMyIssues]);
+    axiosInstance.get(`/issues?email=${user?.email}`).then((res) => {
+      setMyIssues(res.data);
+      setRefresh(true);
+    });
+  }, [axiosInstance, user, setMyIssues, setRefresh]);
 
   const handelOpenModal = () => {
     updateModal.current.showModal();
@@ -43,9 +47,30 @@ const MyIssues = () => {
       email,
     };
 
-    axiosInstance
-      .patch(`/issues/${_id}`, updateIssue)
-      .then((res) => console.log(res));
+    axiosInstance.patch(`/issues/${_id}`, updateIssue).then((res) => {
+      if (res.data.acknowledged) {
+        updateModal.current.close();
+        setRefresh(!refresh);
+      }
+
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Update it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: "Updated!",
+            text: "Your file has been Updated.",
+            icon: "success",
+          });
+        }
+      });
+    });
   };
   return (
     <div>
@@ -125,6 +150,7 @@ const MyIssues = () => {
                                 <input
                                   type="text"
                                   name="title"
+                                  defaultValue={issue.title}
                                   placeholder="e.g. Overflowing garbage near park"
                                   className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-700 placeholder-gray-400"
                                   required
@@ -137,6 +163,7 @@ const MyIssues = () => {
                                 </label>
                                 <select
                                   name="category"
+                                  defaultValue={issue.category}
                                   className="w-full border border-gray-300 rounded-lg px-4 py-2.5 bg-white focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent text-gray-700"
                                   required
                                 >
@@ -160,6 +187,7 @@ const MyIssues = () => {
                                 </label>
                                 <textarea
                                   name="description"
+                                  defaultValue={issue.description}
                                   placeholder="Describe the issue in detail..."
                                   rows="4"
                                   className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-green-500 text-gray-700 placeholder-gray-400 resize-none"
@@ -174,6 +202,7 @@ const MyIssues = () => {
                                 <input
                                   type="url"
                                   name="image"
+                                  defaultValue={issue.image}
                                   placeholder="https://example.com/image.jpg"
                                   className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-sky-500 text-gray-700 placeholder-gray-400"
                                   required
@@ -186,6 +215,7 @@ const MyIssues = () => {
                                 </label>
                                 <input
                                   type="number"
+                                  defaultValue={issue.amount}
                                   name="amount"
                                   placeholder="e.g. 500"
                                   className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-green-500 text-gray-700 placeholder-gray-400"
@@ -208,7 +238,6 @@ const MyIssues = () => {
 
                               <button
                                 type="submit"
-                                // onClick={}
                                 className="w-full bg-gradient-to-r from-green-600 to-sky-600 hover:from-green-700 hover:to-sky-700 text-white font-semibold py-3 rounded-xl shadow-md hover:shadow-xl transition-all transform hover:-translate-y-0.5"
                               >
                                 Submit Issue
@@ -219,12 +248,13 @@ const MyIssues = () => {
                             <form method="dialog">
                               {/* if there is a button in form, it will close the modal */}
                               <button className="btn btn-primary border-0">
-                                Close
+                                Cancel
                               </button>
                             </form>
                           </div>
                         </div>
                       </dialog>
+
                       <button
                         // onClick={() => handleDelete(issue._id)}
                         className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-md text-sm"

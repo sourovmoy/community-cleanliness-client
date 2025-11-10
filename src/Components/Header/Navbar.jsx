@@ -4,6 +4,7 @@ import useAuth from "../../Hooks/useAuth";
 
 const Navbar = () => {
   const { user, signOutFunc, loader } = useAuth();
+  console.log(user);
 
   const links = (
     <>

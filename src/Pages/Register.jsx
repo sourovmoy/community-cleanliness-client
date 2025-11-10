@@ -23,12 +23,14 @@ const Register = () => {
     setUser(null);
     setError("");
     e.preventDefault();
-    const displayName = e.target.name?.value;
+    const displayName = e.target.name.value;
     const email = e.target.email?.value;
-    const photoURL = e.target.photo?.value;
+    const photoURL = e.target.photo.value;
     const password = e.target.password?.value;
     const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z]).{6,}$/;
     const photoURLRegex = /^https:\/\/.*\.(png|jpg|jpeg|gif|webp|svg)$/i;
+    console.log(displayName, photoURL);
+
     if (!passwordRegex.test(password)) {
       toast.error(
         "Password must have an Uppercase, Lowercase, Lowercase letter in the password"
