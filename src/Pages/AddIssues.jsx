@@ -64,7 +64,19 @@ const AddIssues = () => {
         }}
         viewport={{ once: true }}
       >
-        <div className="flex justify-center items-center min-h-screen text-base-200 p-4">
+        <motion.h1
+          initial={{ opacity: 0, x: -100 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{
+            duration: 1,
+            ease: "easeOut",
+          }}
+          viewport={{ once: true }}
+          className="text-3xl font-bold text-center mt-6 "
+        >
+          Add <span className="heading-primary">Issues</span>
+        </motion.h1>
+        <div className="flex justify-center items-center min-h-screen  p-4">
           <form
             onSubmit={handleSubmit}
             className="w-full max-w-lg bg-sky-50 shadow-lg rounded-2xl p-8 space-y-5"

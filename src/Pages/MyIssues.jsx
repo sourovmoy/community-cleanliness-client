@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import * as motion from "motion/react-client";
 
 const MyIssues = () => {
-  const { user } = useAuth();
+  const { user, setLoader } = useAuth();
   const [refresh, setRefresh] = useState(true);
   const [id, setId] = useState(null);
   const axiosInstance = useAxiosInstance();
@@ -14,8 +14,9 @@ const MyIssues = () => {
   useEffect(() => {
     axiosInstance.get(`/issues?email=${user?.email}`).then((res) => {
       setMyIssues(res.data);
+      setLoader(false);
     });
-  }, [axiosInstance, user, setMyIssues, refresh]);
+  }, [axiosInstance, user, setMyIssues, refresh, setLoader]);
 
   const handelOpenModal = (id) => {
     setId(id);
@@ -109,8 +110,9 @@ const MyIssues = () => {
         viewport={{ once: true }}
         className="p-4 sm:p-8"
       >
-        <h1 className="text-2xl font-bold text-center mb-6 heading-primary">
-          My Submitted Issues
+        <h1 className="text-2xl font-bold text-center mb-6 ">
+          My <span className="heading-primary">Issues</span> :({myIssues.length}
+          )
         </h1>
         {myIssues.length === 0 ? (
           <p className="text-center text-gray-500">No issues found.</p>

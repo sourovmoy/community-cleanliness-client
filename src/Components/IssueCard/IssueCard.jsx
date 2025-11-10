@@ -1,10 +1,43 @@
-import React, { useRef } from "react";
+import React, { useState } from "react";
+import useAxiosInstance from "../../Hooks/useAxiosInstance";
+import useAuth from "../../Hooks/useAuth";
+import Swal from "sweetalert2";
 
 const IssueCard = ({ issue }) => {
-  const modalRef = useRef(null);
-  const handelModal = () => {
-    modalRef.current.showModal();
+  const { user } = useAuth();
+  const axiosInstance = useAxiosInstance();
+  const [id, setId] = useState(null);
+  const handelModal = (id) => {
+    setId(id);
+    document.getElementById(id).showModal();
   };
+
+  const handelContribution = (e) => {
+    e.preventDefault();
+    const contribution = e.target.amount.value;
+    const date = new Date().toISOString();
+    const newContribution = {
+      paid_amount: contribution,
+      image: issue.image,
+      category: issue.category,
+      date: date,
+      title: issue.title,
+      issue: issue._id,
+      email: user?.email,
+    };
+
+    axiosInstance.post("/contribution", newContribution).then((res) => {
+      if (res.data.acknowledged) {
+        Swal.fire({
+          title: "Congratulation on your Contribution",
+          icon: "success",
+          draggable: true,
+        });
+        document.getElementById(id).close();
+      }
+    });
+  };
+
   return (
     <div>
       <div className="text-base-200 bg-gradient-to-r from-sky-900 to-sky-600 rounded-2xl shadow-lg overflow-hidden transform hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 h-auto md:h-[65vh]">
@@ -41,7 +74,7 @@ const IssueCard = ({ issue }) => {
 
           <div className="flex items-center justify-between mt-4">
             <button
-              onClick={handelModal}
+              onClick={() => handelModal(issue._id)}
               className="flex items-center gap-2 bg-sky-600 text-white text-sm font-semibold px-4 py-2 rounded-xl hover:bg-sky-700 transition-all duration-200"
             >
               See Details
@@ -50,11 +83,7 @@ const IssueCard = ({ issue }) => {
         </div>
       </div>
 
-      <dialog
-        ref={modalRef}
-        id="my_modal_5"
-        className="modal modal-bottom sm:modal-middle"
-      >
+      <dialog id={issue._id} className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
           <div className="max-w-4xl mx-auto bg-gradient-to-r from-sky-50 to-green-50 shadow-xl rounded-2xl overflow-hidden mt-10 transition-all duration-300 hover:shadow-2xl">
             <div className="relative">
@@ -116,6 +145,24 @@ const IssueCard = ({ issue }) => {
                 >
                   {issue.status}
                 </span>
+              </div>
+              <div>
+                <form onSubmit={handelContribution}>
+                  <label className="block text-gray-700 mb-1 font-medium">
+                    Make a Contribution (৳)
+                  </label>
+                  <input
+                    type="number"
+                    defaultValue={issue.amount}
+                    name="amount"
+                    placeholder="e.g. 500"
+                    className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-green-500 text-gray-700 placeholder-gray-400"
+                    required
+                  />
+                  <button className="btn-primary w-full mt-2">
+                    Your contribution
+                  </button>
+                </form>
               </div>
             </div>
           </div>
