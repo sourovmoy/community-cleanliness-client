@@ -1,7 +1,9 @@
 import React from "react";
 
 const Home = () => {
-  return <div>This is home</div>;
+  return <div className="min-h-screen">
+
+  </div>;
 };
 
 export default Home;
