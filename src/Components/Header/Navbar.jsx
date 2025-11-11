@@ -153,6 +153,15 @@ const Navbar = () => {
               tabIndex="-1"
               className="dropdown-content menu bg-base-100 rounded-box z-10 p-2 shadow-sm"
             >
+              <div className="flex justify-between mx-4">
+                <p className=" text-sky-400 font-semibold">Theme</p>
+                <input
+                  onClick={handelTheme}
+                  type="checkbox"
+                  defaultChecked={localStorage.getItem("theme") === "dark"}
+                  className="toggle"
+                />
+              </div>
               <li>
                 <p className="font-semibold text-sky-400">
                   {user?.displayName}

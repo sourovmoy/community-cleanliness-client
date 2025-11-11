@@ -10,7 +10,7 @@ const IssueCard = ({ issue }) => {
 
   return (
     <div>
-      <div className="text-base-200 bg-gradient-to-r from-sky-900 to-sky-600 rounded-2xl shadow-lg overflow-hidden transform hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 h-auto md:h-[65vh]">
+      <div className="text-base-200 bg-gradient-to-r from-sky-900 to-sky-600 rounded-2xl shadow-lg overflow-hidden transform hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 h-auto">
         <div className="relative">
           <img
             src={issue.image}
@@ -23,6 +23,9 @@ const IssueCard = ({ issue }) => {
         </div>
 
         <div className="p-5">
+          <p className="text-xl text-base-300 dark:text-gray-300 mb-2 line-clamp-2">
+            {issue.title}
+          </p>
           <p className="text-sm text-base-300 dark:text-gray-300 mb-2 line-clamp-2">
             {issue.description}
           </p>

@@ -5,19 +5,26 @@ import useAxiosInstance from "../Hooks/useAxiosInstance";
 import { Atom } from "react-loading-indicators";
 import * as motion from "motion/react-client";
 import Swal from "sweetalert2";
+import IssuesContribution from "../Components/IssuesContribution/IssuesContribution";
 
 const IssueDetails = () => {
   const { user, setLoader, loader } = useAuth();
   const axiosInstance = useAxiosInstance();
   const id = useParams();
   const [issue, setIssue] = useState({});
+  const [update, setUpdate] = useState(true);
+  const [contributions, setContributions] = useState([]);
 
   useEffect(() => {
     axiosInstance.get(`/issues/${id.id}`).then((res) => {
       setIssue(res.data);
       setLoader(false);
+
+      axiosInstance.get(`/issues/contribution/${id.id}`).then((res) => {
+        setContributions(res.data);
+      });
     });
-  }, [axiosInstance, id, setLoader]);
+  }, [axiosInstance, id, setLoader, update]);
 
   if (loader) {
     return (
@@ -35,6 +42,7 @@ const IssueDetails = () => {
     const newContribution = {
       paid_amount: contribution,
       image: issue.image,
+      contributor_image: user?.photoURL,
       phone: phone,
       category: issue.category,
       date: date,
@@ -51,6 +59,7 @@ const IssueDetails = () => {
           icon: "success",
           draggable: true,
         });
+        setUpdate(!update);
       }
     });
   };
@@ -278,6 +287,9 @@ const IssueDetails = () => {
             </div>
           </dialog>
         </div>
+      </div>
+      <div>
+        <IssuesContribution contributions={contributions} />
       </div>
     </div>
   );

@@ -6,15 +6,15 @@ import useAuth from "../Hooks/useAuth";
 import { Atom } from "react-loading-indicators";
 
 const MyContribution = () => {
-  const { loader, setLoader } = useAuth();
+  const { user, loader, setLoader } = useAuth();
   const [contributions, setContributions] = useState([]);
   const axiosInstance = useAxiosInstance();
   useEffect(() => {
-    axiosInstance.get("contribution").then((res) => {
+    axiosInstance.get(`/contribution?email=${user?.email}`).then((res) => {
       setContributions(res.data);
       setLoader(false);
     });
-  }, [axiosInstance, setLoader]);
+  }, [axiosInstance, setLoader, user]);
 
   const handelDownload = (payment) => {
     const doc = new jsPDF();
