@@ -46,7 +46,7 @@ const Navbar = () => {
     setTheme(toggle ? "dark" : "light");
   };
   return (
-    <div className="navbar shadow-sm px-3 sm:px-10">
+    <div className="navbar shadow-sm px-3 sm:px-10 z-20">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">

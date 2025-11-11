@@ -4,7 +4,7 @@ import { FaCheckCircle, FaClock, FaLeaf, FaUserFriends } from "react-icons/fa";
 
 const CommunitySection = () => {
   return (
-    <div className="bg-gradient-to-r from-sky-100 to-sky-200 dark:from-gray-800 dark:to-gray-900 py-16 px-4">
+    <div className=" dark:from-gray-800 dark:to-gray-900 py-16 px-4">
       {/* Community Stats */}
       <div className="max-w-6xl mx-auto text-center mb-12">
         <h2 className="text-4xl font-bold text-gray-800 dark:text-white mb-4">
