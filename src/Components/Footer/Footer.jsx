@@ -1,10 +1,14 @@
 import React from "react";
 import Marquee from "react-fast-marquee";
+import { Link } from "react-router";
 
 const Footer = () => {
   return (
     <div>
       <footer className="footer footer-horizontal footer-center bg-gradient-to-r from-sky-800 to-sky-500 text-base-content rounded p-10 mt-10 font-semibold">
+        <Link to={"/"} className="text-xl sm:text-2xl font-bold flex flex-row">
+          C<span className="heading-primary">C&I</span>RP
+        </Link>
         <Marquee className="bg-sky-300 py-5 text-sky-950 font-bold text-xm rounded-lg">
           <p>
             This project is a community issue management platform where users

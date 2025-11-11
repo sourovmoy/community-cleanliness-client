@@ -92,7 +92,7 @@ const IssueCard = ({ issue }) => {
                 alt={issue.title}
                 className="w-full h-64 sm:h-80 object-cover"
               />
-              <span className="absolute top-4 left-4 bg-gradient-to-r from-[#3b8132] to-[#72bf6a] text-white text-xs sm:text-sm font-semibold px-4 py-1 rounded-full shadow-md">
+              <span className="absolute top-4 left-4 bg-gradient-to-r from-sky-500 to-sky-400 text-white text-xs sm:text-sm font-semibold px-4 py-1 rounded-full shadow-md">
                 {issue.category}
               </span>
             </div>

@@ -36,7 +36,9 @@ const Navbar = () => {
     </>
   );
   const handelSignOut = () => {
-    signOutFunc().then().catch();
+    signOutFunc()
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err.message));
   };
 
   const handelTheme = (e) => {
@@ -82,7 +84,7 @@ const Navbar = () => {
           <input
             onClick={handelTheme}
             type="checkbox"
-            defaultChecked={localStorage.getItem("theme")}
+            defaultChecked={localStorage.getItem("theme") === "dark"}
             className="toggle"
           />
 
@@ -97,11 +99,12 @@ const Navbar = () => {
                   className="h-11 w-11 rounded-full outline-3 outline-sky-600"
                   src={user?.photoURL}
                   alt=""
+                  referrerPolicy="no-referrer"
                 />
               </div>
               <ul
                 tabIndex="-1"
-                className="dropdown-content menu bg-base-100 rounded-box z-1 w-auto p-2 shadow-sm"
+                className="dropdown-content menu bg-base-100 rounded-box z-10 w-auto p-2 shadow-sm"
               >
                 <li>
                   <p className="font-semibold text-sky-400">
@@ -112,7 +115,10 @@ const Navbar = () => {
                   <p className="font-semibold text-sky-400">{user?.email}</p>
                 </li>
                 <li>
-                  <button onClick={handelSignOut} className="btn-primary mx-2">
+                  <button
+                    onClick={handelSignOut}
+                    className="btn-primary mx-2 text-center"
+                  >
                     Logout
                   </button>
                 </li>
@@ -145,7 +151,7 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex="-1"
-              className="dropdown-content menu bg-base-100 rounded-box z-1 p-2 shadow-sm"
+              className="dropdown-content menu bg-base-100 rounded-box z-10 p-2 shadow-sm"
             >
               <li>
                 <p className="font-semibold text-sky-400">
@@ -164,7 +170,13 @@ const Navbar = () => {
           </div>
         ) : (
           <>
-            <Link to="/login" className="btn-primary mr-2">
+            <input
+              onClick={handelTheme}
+              type="checkbox"
+              defaultChecked={localStorage.getItem("theme") === "dark"}
+              className="toggle"
+            />
+            <Link to="/login" className="btn-primary ml-2 mr-2">
               Login
             </Link>
             <Link to="/register" className="btn-primary">

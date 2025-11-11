@@ -100,7 +100,7 @@ const AddIssues = () => {
               <label className="block text-gray-600 mb-1">Category</label>
               <select
                 name="category"
-                className="w-full border border-gray-300 rounded-lg px-3 py-2  focus:outline-none focus:ring-2 focus:ring-green-500"
+                className="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-sky-500 cursor-pointer transition-all duration-300"
                 required
               >
                 <option value="">Select a Category</option>
@@ -164,7 +164,7 @@ const AddIssues = () => {
                 name="email"
                 value={user?.email}
                 readOnly
-                className="w-full border border-gray-200 rounded-lg px-3 py-2 bg-gray-100 cursor-not-allowed"
+                className="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 cursor-not-allowed"
               />
             </div>
 

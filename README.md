@@ -1,6 +1,6 @@
-# 🌿 GreenNest – Community Issue Management Platform
+# Community Cleanliness &amp; Issue Reporting Portal
 
-**Live Site URL:** [https://your-live-url.vercel.app](https://your-live-url.vercel.app)
+**Live Site URL:** [https://community-cleanliness-issues-report.netlify.app/](https://community-cleanliness-issues-report.netlify.app/)
 
 ## 📖 About the Project
 

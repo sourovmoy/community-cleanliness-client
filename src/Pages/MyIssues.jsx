@@ -6,7 +6,6 @@ import * as motion from "motion/react-client";
 import { useNavigate } from "react-router";
 
 const MyIssues = () => {
-  const navigate = useNavigate();
   const { user, setLoader } = useAuth();
   const [refresh, setRefresh] = useState(true);
   const [id, setId] = useState(null);
@@ -56,7 +55,6 @@ const MyIssues = () => {
       if (res.data.acknowledged) {
         document.getElementById(id).close();
         setRefresh(!refresh);
-        navigate("/my-contribution");
       }
       Swal.fire({
         title: "Are you sure?",
