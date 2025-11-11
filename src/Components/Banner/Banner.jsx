@@ -4,6 +4,7 @@ import { Autoplay, Pagination } from "swiper/modules";
 import * as motion from "motion/react-client";
 import "swiper/css";
 import "swiper/css/pagination";
+import { Typewriter } from "react-simple-typewriter";
 
 import img1 from "../../assets/1681367949744.jpeg";
 import img2 from "../../assets/36-ke-240602-cleanup-2.webp";
@@ -13,6 +14,14 @@ import { FaSearch } from "react-icons/fa";
 import { Link } from "react-router";
 
 const Banner = () => {
+  // const handleType = (count: number) => {
+  //     console.log(count);
+  // };
+
+  const handleDone = () => {
+    console.log(`Done after 5 loops!`);
+  };
+
   return (
     <div className="">
       <div className="bg-linear-to-r from-sky-300 to-sky-200">
@@ -24,10 +33,30 @@ const Banner = () => {
             ease: "easeOut",
           }}
           viewport={{ once: true }}
-          className="text-center text-3xl font-bold pt-5 mb-2 sm:mb-5"
+          className="text-center text-3xl font-bold pt-5"
         >
           Our <span className="heading-primary">Activity</span>
         </motion.h2>
+        <div className="flex justify-center items-center">
+          <h1 className="mt-4 text-xl font-semibold text-sky-800 flex items-center">
+            <p className="text-xl sm:text-2xl font-bold">
+              C<span className="heading-primary">C&I</span>RP
+            </p>
+            :{" "}
+            <span className="">
+              <Typewriter
+                words={["Community Cleanliness &amp; Issue Reporting Portal"]}
+                loop={5}
+                cursor
+                cursorStyle="_"
+                typeSpeed={70}
+                deleteSpeed={50}
+                delaySpeed={1000}
+                onLoopDone={handleDone}
+              />
+            </span>
+          </h1>
+        </div>
 
         <Swiper
           modules={[Pagination, Autoplay]}

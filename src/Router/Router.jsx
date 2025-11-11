@@ -9,6 +9,7 @@ import AddIssues from "../Pages/AddIssues";
 import MyIssues from "../Pages/MyIssues";
 import MyContribution from "../Pages/MyContribution";
 import ErrorPage from "../Pages/ErrorPage";
+import IssueDetails from "../Pages/IssueDetails";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: "/all-issues",
         element: <AllIssues />,
+      },
+      {
+        path: "/all-issues/:id",
+        element: <IssueDetails />,
       },
       {
         path: "/add-issues",
