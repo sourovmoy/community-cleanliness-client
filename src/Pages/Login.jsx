@@ -35,7 +35,11 @@ const Login = () => {
         navigate("/");
       })
       .catch((err) => {
-        setError(err.message);
+        console.log(err.code);
+
+        if (err.code === "auth/invalid-credential") {
+          toast.error("Please register first");
+        }
         setLoader(false);
       });
   };
@@ -74,7 +78,7 @@ const Login = () => {
           <h3 className="text-3xl text-sky-700 font-bold text-center ">
             Login
           </h3>
-          <form onSubmit={handelSignin}> 
+          <form onSubmit={handelSignin}>
             <fieldset className="fieldset">
               <label className="label">Email</label>
               <input

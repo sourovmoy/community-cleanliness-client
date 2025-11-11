@@ -57,7 +57,9 @@ const Register = () => {
       })
       .catch((err) => {
         setLoader(false);
-        setError(err.message);
+        if (err.code === "auth/email-already-in-use") {
+          toast.error("This Email is already used");
+        }
       });
   };
 
@@ -69,7 +71,9 @@ const Register = () => {
         setUser(res.user);
         navigate("/");
       })
-      .catch((err) => setError(err.message));
+      .catch((err) => {
+        setError(err.message);
+      });
   };
   return (
     <div>
