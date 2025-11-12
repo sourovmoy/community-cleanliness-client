@@ -4,9 +4,9 @@ import { FaUserCircle } from "react-icons/fa";
 const IssuesContribution = ({ contributions }) => {
   return (
     <div>
-      <div className="overflow-x-auto mt-6">
+      <div className="overflow-x-scroll mt-6">
         <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700 border border-gray-200 dark:border-gray-700 rounded-lg">
-          <thead className="bg-gray-100 dark:bg-gray-800">
+          <thead className="bg-gradient-to-r from-sky-800 to-sky-400 dark:bg-gray-800">
             <tr>
               <th className="px-3 sm:px-4 py-2 text-left text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-200">
                 Contributor

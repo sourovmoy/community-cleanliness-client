@@ -5,6 +5,8 @@ import { Link } from "react-router";
 import useAxiosInstance from "../Hooks/useAxiosInstance";
 import IssueCard from "../Components/IssueCard/IssueCard";
 import CommunitySection from "../assets/CommunitySection/CommunitySection";
+import Motion from "../Components/Motion/Motion";
+import MotionHeading from "../Components/Motion/MotionHeading";
 // import * as motion from "motion/react-client";
 
 const Home = () => {
@@ -54,71 +56,46 @@ const Home = () => {
       <Banner />
       <section className="py-12">
         <div className="max-w-6xl mx-auto px-4 text-center">
-          <motion.h2
-            initial={{ opacity: 0, x: -100 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{
-              duration: 1,
-              ease: "easeOut",
-            }}
-            viewport={{ once: true }}
-            className="text-center text-3xl font-bold mt-5 mb-5 sm:mb-10"
-          >
+          <MotionHeading>
             Explore Issue<span className="heading-primary"> Categories</span>
-          </motion.h2>
+          </MotionHeading>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-5 sm:mt-10">
             {categories.map((cat) => (
-              <div
-                key={cat.id}
-                className={`bg-gradient-to-r ${cat.color}  rounded-2xl shadow-lg p-6 flex flex-col items-center transition-all transform hover:-translate-y-2 hover:shadow-2xl`}
-              >
-                <img
-                  src={cat.image}
-                  alt={cat.name}
-                  className="w-20 h-20 mb-4 drop-shadow-md"
-                />
-                <h3 className="text-xl font-semibold mb-2">{cat.name}</h3>
-                <p className="text-sm opacity-90">{cat.description}</p>
-                <Link
-                  to={"/add-issues"}
-                  className="mt-4 bg-white text-gray-800 font-semibold py-2 px-4 rounded-lg hover:bg-gray-100 transition"
+              <Motion>
+                <div
+                  key={cat.id}
+                  className={`bg-gradient-to-r ${cat.color}  rounded-2xl shadow-lg p-6 flex flex-col items-center transition-all transform hover:-translate-y-2 hover:shadow-2xl`}
                 >
-                  Report Issue
-                </Link>
-              </div>
+                  <img
+                    src={cat.image}
+                    alt={cat.name}
+                    className="w-20 h-20 mb-4 drop-shadow-md"
+                  />
+                  <h3 className="text-xl font-semibold mb-2">{cat.name}</h3>
+                  <p className="text-sm opacity-90">{cat.description}</p>
+                  <Link
+                    to={"/add-issues"}
+                    className="mt-4 bg-white text-gray-800 font-semibold py-2 px-4 rounded-lg hover:bg-gray-100 transition"
+                  >
+                    Report Issue
+                  </Link>
+                </div>
+              </Motion>
             ))}
           </div>
         </div>
       </section>
       <section>
-        <motion.h2
-          initial={{ opacity: 0, x: -100 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{
-            duration: 1,
-            ease: "easeOut",
-          }}
-          viewport={{ once: true }}
-          className="text-center text-3xl font-bold mt-5 mb-5 sm:mb-10"
-        >
+        <MotionHeading>
           Recent<span className="heading-primary"> Issues</span>
-        </motion.h2>
+        </MotionHeading>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-8 mt-5 sm:mt-14">
           {issues ? (
             issues.map((issue) => (
-              <motion.div
-                key={issue._id}
-                initial={{ opacity: 0, y: 80 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 1,
-                  ease: "easeOut",
-                }}
-                viewport={{ once: true }}
-              >
+              <Motion>
                 <IssueCard issue={issue}></IssueCard>
-              </motion.div>
+              </Motion>
             ))
           ) : (
             <div className="text-4xl flex justify-center">
@@ -127,7 +104,9 @@ const Home = () => {
           )}
         </div>
       </section>
-      <CommunitySection />
+      <Motion>
+        <CommunitySection />
+      </Motion>
     </div>
   );
 };
