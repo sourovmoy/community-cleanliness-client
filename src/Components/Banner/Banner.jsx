@@ -1,7 +1,6 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
-import * as motion from "motion/react-client";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Typewriter } from "react-simple-typewriter";
@@ -11,13 +10,12 @@ import img2 from "../../assets/36-ke-240602-cleanup-2.webp";
 import img5 from "../../assets/IMG_1567_09989-e1663049404819.jpg";
 import img6 from "../../assets/IMG_E6238-scaled.jpg";
 import { FaSearch } from "react-icons/fa";
-import { Link } from "react-router";
 import MotionHeading from "../Motion/MotionHeading";
 
 const Banner = () => {
   return (
     <div className="">
-      <div className="bg-linear-to-r from-sky-300 to-sky-200">
+      <div className="bg-linear-to-r from-sky-300 to-sky-200 rounded-2xl">
         <MotionHeading>
           Our <span className="heading-primary">Activity</span>
         </MotionHeading>

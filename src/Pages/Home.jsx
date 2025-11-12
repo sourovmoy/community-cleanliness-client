@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import * as motion from "motion/react-client";
 import Banner from "../Components/Banner/Banner";
 import { Link } from "react-router";
 import useAxiosInstance from "../Hooks/useAxiosInstance";
@@ -7,7 +6,6 @@ import IssueCard from "../Components/IssueCard/IssueCard";
 import CommunitySection from "../assets/CommunitySection/CommunitySection";
 import Motion from "../Components/Motion/Motion";
 import MotionHeading from "../Components/Motion/MotionHeading";
-// import * as motion from "motion/react-client";
 
 const Home = () => {
   const [issues, setIssues] = useState();

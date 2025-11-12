@@ -3,7 +3,7 @@ import useAuth from "../Hooks/useAuth";
 import useAxiosInstance from "../Hooks/useAxiosInstance";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
-import * as motion from "motion/react-client";
+import MotionHeading from "../Components/Motion/MotionHeading";
 
 const AddIssues = () => {
   const { user } = useAuth();
@@ -55,27 +55,10 @@ const AddIssues = () => {
 
   return (
     <div>
-      <motion.div
-        initial={{ opacity: 0, y: 80 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{
-          duration: 1,
-          ease: "easeOut",
-        }}
-        viewport={{ once: true }}
-      >
-        <motion.h1
-          initial={{ opacity: 0, x: -100 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{
-            duration: 1,
-            ease: "easeOut",
-          }}
-          viewport={{ once: true }}
-          className="text-3xl font-bold text-center mt-6 "
-        >
+      <div>
+        <MotionHeading>
           Add <span className="heading-primary">Issues</span>
-        </motion.h1>
+        </MotionHeading>
         <div className="flex justify-center items-center min-h-screen  p-4">
           <form
             onSubmit={handleSubmit}
@@ -176,7 +159,7 @@ const AddIssues = () => {
             </button>
           </form>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 };

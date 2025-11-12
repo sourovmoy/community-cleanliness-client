@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import useAxiosInstance from "../Hooks/useAxiosInstance";
 import useAuth from "../Hooks/useAuth";
 import Swal from "sweetalert2";
-import * as motion from "motion/react-client";
-import { useNavigate } from "react-router";
+import Motion from "../Components/Motion/Motion";
+import MotionHeading from "../Components/Motion/MotionHeading";
 
 const MyIssues = () => {
   const { user, setLoader } = useAuth();
@@ -101,30 +101,13 @@ const MyIssues = () => {
   };
   return (
     <div>
-      <motion.div
-        initial={{ opacity: 0, y: 80 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{
-          duration: 1,
-          ease: "easeOut",
-        }}
-        viewport={{ once: true }}
-        className="p-4 sm:p-8"
-      >
-        <motion.h1
-          initial={{ opacity: 0, x: -100 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{
-            duration: 1,
-            ease: "easeOut",
-          }}
-          viewport={{ once: true }}
-          className="text-3xl font-bold text-center mt-5 sm:mt-10 mb-10"
-        >
-          My <span className="heading-primary">Issues</span> :({myIssues.length}
-          )
-        </motion.h1>
-
+      <div>
+        <h1 className="mb-5 sm:mb-10">
+          <MotionHeading>
+            My <span className="heading-primary">Issues</span> :(
+            {myIssues.length})
+          </MotionHeading>
+        </h1>
         {myIssues.length === 0 ? (
           <p className="text-center text-gray-500">No issues found.</p>
         ) : (
@@ -315,7 +298,7 @@ const MyIssues = () => {
             </table>
           </div>
         )}
-      </motion.div>
+      </div>
     </div>
   );
 };
