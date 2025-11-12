@@ -31,7 +31,6 @@ const IssueCard = ({ issue }) => {
           </p>
           {issue.status && (
             <div className="badge badge-soft bg-sky-100 text-sky-800 font-bold">
-              primary
               {issue.status}
             </div>
           )}

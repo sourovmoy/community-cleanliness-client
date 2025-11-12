@@ -13,6 +13,7 @@ const AllIssues = () => {
   const [issues, setIssues] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sort, setSort] = useState("default");
+  const [sort1, setSort1] = useState("default");
 
   useEffect(() => {
     setLoading(true);
@@ -21,6 +22,7 @@ const AllIssues = () => {
         params: {
           search: search || undefined, // only include if search has value
           category: sort !== "default" ? sort : undefined,
+          status: sort1 !== "default" ? sort1 : undefined,
         },
       })
       .then((res) => {
@@ -28,7 +30,15 @@ const AllIssues = () => {
         setLoading(false);
       })
       .catch(() => setLoading(false));
-  }, [axiosInstance, search, sort]);
+  }, [axiosInstance, search, sort, sort1]);
+
+  const handelSearch = (e) => {
+    e.preventDefault();
+    let search = e.target.search.value;
+    const trim = search.trim().toLocaleLowerCase();
+    setSearch(trim);
+  };
+  console.log(search);
 
   if (loading) {
     return (
@@ -43,17 +53,17 @@ const AllIssues = () => {
         <Motion>
           <div className="text-center text-3xl font-bold mt-5 sm:mt-10 flex flex-col justify-center items-center">
             <div className="items-center">
-              <input
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                name="search"
-                type="text"
-                placeholder="search For Issues..."
-                className="input rounded-l-full border-r-none w-auto sm:w-[40vw] mb-3 sm:mb-3"
-              />
-              <button className="btn btn-md absolute b-5 rounded-r-full border-r-none text-white bg-linear-to-l from-sky-700 to-sky-400">
-                <FaSearch />
-              </button>
+              <form onSubmit={handelSearch}>
+                <input
+                  name="search"
+                  type="text"
+                  placeholder="search For Issues..."
+                  className="input rounded-l-full border-r-none w-auto sm:w-[40vw] mb-3 sm:mb-3"
+                />
+                <button className="submit btn btn-md absolute b-5 rounded-r-full border-r-none text-white bg-linear-to-l from-sky-700 to-sky-400">
+                  <FaSearch />
+                </button>
+              </form>
             </div>
             <div className="space-x-2">
               <Link
@@ -76,8 +86,22 @@ const AllIssues = () => {
       <MotionHeading>
         All <span className="heading-primary ">Issues</span>: {issues.length}
       </MotionHeading>
-      <div className="flex justify-end">
+      <div className="sm:flex justify-between">
         {" "}
+        <label className="form-control w-full max-w-xs mb-5 sm:mb-0">
+          <select
+            className="select select-bordered"
+            value={sort}
+            onChange={(e) => {
+              setSort1(e.target.value);
+            }}
+          >
+            <option value="default">Default</option>
+            <option value="active">Active</option>
+            <option value="resolved">Resolved</option>
+            <option value="ongoing">Ongoing</option>
+          </select>
+        </label>
         <label className="form-control w-full max-w-xs">
           <select
             className="select select-bordered"
@@ -98,7 +122,7 @@ const AllIssues = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-8 mt-5 sm:mt-14">
         {issues ? (
           issues.map((issue) => (
-            <Motion>
+            <Motion key={issue._id}>
               <IssueCard issue={issue}></IssueCard>
             </Motion>
           ))
