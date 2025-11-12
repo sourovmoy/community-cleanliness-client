@@ -34,22 +34,21 @@ const AddIssues = () => {
       email,
     };
 
-    axiosInstance.post("/issues", newIssue).then(() => {
-      Swal.fire({
-        title: "Do you want to submit this issue?",
-        showDenyButton: true,
-        showCancelButton: true,
-        confirmButtonText: "Submit",
-        denyButtonText: `Cancel`,
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire("Issue Reported Successfully!", "", "success");
-          e.target.reset();
-          navigate("/my-issues");
-        } else if (result.isDenied) {
-          Swal.fire("Submission canceled", "", "info");
-        }
-      });
+    Swal.fire({
+      title: "Do you want to submit this issue?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Submit",
+      denyButtonText: `Cancel`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosInstance.post("/issues", newIssue).then(() => {});
+        Swal.fire("Issue Reported Successfully!", "", "success");
+        e.target.reset();
+        navigate("/my-issues");
+      } else if (result.isDenied) {
+        Swal.fire("Submission canceled", "", "info");
+      }
     });
   };
 

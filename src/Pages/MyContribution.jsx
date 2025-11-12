@@ -4,6 +4,7 @@ import * as motion from "motion/react-client";
 import jsPDF from "jspdf";
 import useAuth from "../Hooks/useAuth";
 import { Atom } from "react-loading-indicators";
+import { FaDownload, FaFileDownload } from "react-icons/fa";
 
 const MyContribution = () => {
   const { user, loader, setLoader } = useAuth();
@@ -110,34 +111,12 @@ const MyContribution = () => {
                         {new Date(payment.date).toLocaleDateString()}
                       </td>
                       <td className="py-3 px-4 text-center">
-                        <div
+                        <button
+                          className="btn-primary flex items-center gap-2"
                           onClick={() => handelDownload(payment)}
-                          class="container"
                         >
-                          <label class="label">
-                            <input type="checkbox" class="input" />
-                            <span class="circle">
-                              <svg
-                                class="icon"
-                                aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                              >
-                                <path
-                                  stroke="currentColor"
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  stroke-width="1.5"
-                                  d="M12 19V5m0 14-4-4m4 4 4-4"
-                                ></path>
-                              </svg>
-                              <div class="square"></div>
-                            </span>
-                            <p class="title">Download</p>
-                            <p class="title">Open</p>
-                          </label>
-                        </div>
+                          Download <FaFileDownload />
+                        </button>
                       </td>
                     </tr>
                   </tbody>
