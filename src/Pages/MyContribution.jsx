@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import useAxiosInstance from "../Hooks/useAxiosInstance";
-import * as motion from "motion/react-client";
 import jsPDF from "jspdf";
 import useAuth from "../Hooks/useAuth";
 import { Atom } from "react-loading-indicators";
-import { FaDownload, FaFileDownload } from "react-icons/fa";
+import { FaFileDownload } from "react-icons/fa";
+import Motion from "../Components/Motion/Motion";
+import MotionHeading from "../Components/Motion/MotionHeading";
 
 const MyContribution = () => {
   const { user, loader, setLoader } = useAuth();
@@ -45,29 +46,12 @@ const MyContribution = () => {
 
   return (
     <div>
-      <motion.h1
-        initial={{ opacity: 0, x: -100 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        transition={{
-          duration: 1,
-          ease: "easeOut",
-        }}
-        viewport={{ once: true }}
-        className="text-3xl font-bold text-center mt-5 sm:mt-14"
-      >
+      <MotionHeading>
         My <span className="heading-primary">Contribution</span>: (
         {contributions.length})
-      </motion.h1>
+      </MotionHeading>
       <div>
-        <motion.div
-          initial={{ opacity: 0, y: 100 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 1,
-            ease: "easeOut",
-          }}
-          viewport={{ once: true }}
-        >
+        <Motion>
           <div className="max-w-6xl mx-auto p-4 sm:p-6 mt-8  shadow-lg rounded-2xl overflow-x-auto">
             <table className="min-w-full table-auto border-collapse">
               <thead className="bg-sky-700">
@@ -133,7 +117,7 @@ const MyContribution = () => {
               )}
             </table>
           </div>
-        </motion.div>
+        </Motion>
       </div>
     </div>
   );

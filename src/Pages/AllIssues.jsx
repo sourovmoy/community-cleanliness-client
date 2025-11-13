@@ -96,10 +96,18 @@ const AllIssues = () => {
               setSort1(e.target.value);
             }}
           >
-            <option value="default">Sort by Status</option>
-            <option value="active">Active</option>
-            <option value="resolved">Resolved</option>
-            <option value="ongoing">Ongoing</option>
+            <option className="hover:bg-sky-200" value="default">
+              Sort by Status
+            </option>
+            <option className="hover:bg-sky-200" value="active">
+              Active
+            </option>
+            <option className="hover:bg-sky-200" value="resolved">
+              Resolved
+            </option>
+            <option className="hover:bg-sky-200" value="ongoing">
+              Ongoing
+            </option>
           </select>
         </label>
         <label className="form-control w-full max-w-xs">
@@ -110,11 +118,21 @@ const AllIssues = () => {
               setSort(e.target.value);
             }}
           >
-            <option value="default">Sort by Category</option>
-            <option value="Garbage">Garbage</option>
-            <option value="Vandalism">Vandalism</option>
-            <option value="Footpath">Footpath</option>
-            <option value="Illegal Activity">Illegal Activity</option>
+            <option className="hover:bg-sky-200" value="default">
+              Sort by Category
+            </option>
+            <option className="hover:bg-sky-200" value="Garbage">
+              Garbage
+            </option>
+            <option className="hover:bg-sky-200" value="Vandalism">
+              Vandalism
+            </option>
+            <option className="hover:bg-sky-200" value="Footpath">
+              Footpath
+            </option>
+            <option className="hover:bg-sky-200" value="Illegal Activity">
+              Illegal Activity
+            </option>
             <option value="Waterlogging">Waterlogging</option>
           </select>
         </label>

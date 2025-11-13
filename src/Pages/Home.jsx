@@ -6,6 +6,7 @@ import IssueCard from "../Components/IssueCard/IssueCard";
 import CommunitySection from "../assets/CommunitySection/CommunitySection";
 import Motion from "../Components/Motion/Motion";
 import MotionHeading from "../Components/Motion/MotionHeading";
+import { FaArrowRight } from "react-icons/fa";
 
 const Home = () => {
   const [issues, setIssues] = useState();
@@ -100,6 +101,11 @@ const Home = () => {
               <h1>No Issue Found</h1>
             </div>
           )}
+        </div>
+        <div className="flex justify-center mt-5">
+          <Link to={"/all-issues"} className="btn-primary flex items-center">
+            See more <FaArrowRight />
+          </Link>
         </div>
       </section>
       <Motion>
