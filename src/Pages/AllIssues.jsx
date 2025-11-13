@@ -88,15 +88,15 @@ const AllIssues = () => {
       </MotionHeading>
       <div className="sm:flex justify-between">
         {" "}
-        <label className="form-control w-full max-w-xs mb-5 sm:mb-0">
+        <label className="form-control w-full max-w-xs ">
           <select
-            className="select select-bordered"
+            className="select select-bordered mb-5 sm:mb-0"
             value={sort}
             onChange={(e) => {
               setSort1(e.target.value);
             }}
           >
-            <option value="default">Default</option>
+            <option value="default">Sort by Status</option>
             <option value="active">Active</option>
             <option value="resolved">Resolved</option>
             <option value="ongoing">Ongoing</option>
@@ -110,7 +110,7 @@ const AllIssues = () => {
               setSort(e.target.value);
             }}
           >
-            <option value="default">Default</option>
+            <option value="default">Sort by Category</option>
             <option value="Garbage">Garbage</option>
             <option value="Vandalism">Vandalism</option>
             <option value="Footpath">Footpath</option>
