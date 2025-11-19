@@ -1,3 +1,8 @@
+<p align="center">
+  <img src="./community-cleanliness-issues-report.netlify.app_.png" alt="GitHub Banner" />
+</p>
+
+
 # Community Cleanliness &amp; Issue Reporting Portal
 
 **Live Site URL:** [https://community-cleanliness-issues-report.netlify.app/](https://community-cleanliness-issues-report.netlify.app/)
