@@ -26,7 +26,7 @@ const IssuesContribution = ({ contributions }) => {
                 className="hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
               >
                 <td className="px-3 sm:px-4 py-2 text-xs sm:text-sm text-gray-800 dark:text-gray-200 font-medium break-words">
-                  {contribution.email.split("@")[0]}
+                  {contribution.email}
                 </td>
                 <td className="px-3 sm:px-4 py-2">
                   {contribution.contributor_image ? (

@@ -10,6 +10,9 @@ import MyIssues from "../Pages/MyIssues";
 import MyContribution from "../Pages/MyContribution";
 import ErrorPage from "../Pages/ErrorPage";
 import IssueDetails from "../Pages/IssueDetails";
+import About from "../Pages/About";
+import Contact from "../Pages/Contact";
+import Terms from "../Pages/Terms";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +31,18 @@ const router = createBrowserRouter([
       {
         path: "/register",
         Component: Register,
+      },
+      {
+        path: "/about-us",
+        Component: About,
+      },
+      {
+        path: "/contact",
+        Component: Contact,
+      },
+      {
+        path: "/terms-and-conditions",
+        Component: Terms,
       },
       {
         path: "/all-issues",

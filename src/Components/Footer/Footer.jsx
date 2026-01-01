@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <div>
       <Motion>
-        <footer className="footer footer-horizontal footer-center bg-gradient-to-r from-sky-800 to-sky-500 text-base-content rounded p-10 mt-10 font-semibold">
+        <footer className="footer footer-horizontal footer-center bg-gradient-to-r from-sky-800 to-sky-500 text-base-content rounded p-10 mt-10 font-semibold clip-footer">
           <Link
             to={"/"}
             className="text-xl sm:text-2xl font-bold flex flex-row"
@@ -27,10 +27,15 @@ const Footer = () => {
           </Marquee>
 
           <nav className="grid grid-flow-col gap-4">
-            <a className="link link-hover">About us</a>
-            <a className="link link-hover">Contact</a>
-            <a className="link link-hover">Jobs</a>
-            <a className="link link-hover">Press kit</a>
+            <Link to={"/about-us"} className="Link Link-hover">
+              About us
+            </Link>
+            <Link to={"/contact"} className="Link Link-hover">
+              Contact
+            </Link>
+            <Link to={"/terms-and-conditions"} className="Link Link-hover">
+              Terms and condition
+            </Link>
           </nav>
           <nav>
             <div className="grid grid-flow-col gap-4">

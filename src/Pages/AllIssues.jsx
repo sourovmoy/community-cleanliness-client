@@ -6,6 +6,7 @@ import { Link } from "react-router";
 import { FaSearch } from "react-icons/fa";
 import Motion from "../Components/Motion/Motion";
 import MotionHeading from "../Components/Motion/MotionHeading";
+import SkeletonIssueCard from "../Components/Skeleton/SkeletonIssueCard";
 
 const AllIssues = () => {
   const [search, setSearch] = useState("");
@@ -38,18 +39,13 @@ const AllIssues = () => {
     const trim = search.trim().toLocaleLowerCase();
     setSearch(trim);
   };
-  console.log(search);
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <Atom color="#0EA5E9" size="medium" text="" textColor="" />
-      </div>
-    );
-  }
   return (
     <div>
       <div>
+        <MotionHeading>
+          All <span className="heading-primary">Issues</span>: {issues.length}
+        </MotionHeading>
         <Motion>
           <div className="text-center text-3xl font-bold mt-5 sm:mt-10 flex flex-col justify-center items-center">
             <div className="items-center">
@@ -83,9 +79,6 @@ const AllIssues = () => {
         </Motion>
       </div>
 
-      <MotionHeading>
-        All <span className="heading-primary ">Issues</span>: {issues.length}
-      </MotionHeading>
       <div className="sm:flex justify-between">
         {" "}
         <label className="form-control w-full max-w-xs ">
@@ -137,8 +130,10 @@ const AllIssues = () => {
           </select>
         </label>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-8 mt-5 sm:mt-14">
-        {issues ? (
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-3 mt-5 sm:mt-14">
+        {loading ? (
+          Array.from({ length: 16 }, (_, i) => <SkeletonIssueCard key={i} />)
+        ) : issues ? (
           issues.map((issue) => (
             <Motion key={issue._id}>
               <IssueCard issue={issue}></IssueCard>

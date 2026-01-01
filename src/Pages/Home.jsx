@@ -7,9 +7,11 @@ import CommunitySection from "../assets/CommunitySection/CommunitySection";
 import Motion from "../Components/Motion/Motion";
 import MotionHeading from "../Components/Motion/MotionHeading";
 import { FaArrowRight } from "react-icons/fa";
+import SkeletonIssueCard from "../Components/Skeleton/SkeletonIssueCard";
 
 const Home = () => {
   const [issues, setIssues] = useState();
+  const [loading, setLoading] = useState(true);
   const axiosInstance = useAxiosInstance();
   const categories = [
     {
@@ -47,8 +49,12 @@ const Home = () => {
   ];
 
   useEffect(() => {
-    axiosInstance.get("/recent-issues").then((res) => setIssues(res.data));
-  }, [setIssues, axiosInstance]);
+    setLoading(true);
+    axiosInstance.get("/recent-issues").then((res) => {
+      setIssues(res.data);
+      setLoading(false);
+    });
+  }, [setIssues, axiosInstance, setLoading]);
 
   return (
     <div className="min-h-screen">
@@ -89,8 +95,10 @@ const Home = () => {
         <MotionHeading>
           Recent<span className="heading-primary"> Issues</span>
         </MotionHeading>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-8 mt-5 sm:mt-14">
-          {issues ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-8 mt-5 sm:mt-14">
+          {loading ? (
+            Array.from({ length: 8 }, (_, i) => <SkeletonIssueCard key={i} />)
+          ) : issues ? (
             issues.map((issue) => (
               <Motion>
                 <IssueCard issue={issue}></IssueCard>
