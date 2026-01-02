@@ -7,7 +7,9 @@ import { FaSearch } from "react-icons/fa";
 import Motion from "../Components/Motion/Motion";
 import MotionHeading from "../Components/Motion/MotionHeading";
 import SkeletonIssueCard from "../Components/Skeleton/SkeletonIssueCard";
+import Container from "../Components/Container/Container";
 
+const limit = 12;
 const AllIssues = () => {
   const [search, setSearch] = useState("");
   const axiosInstance = useAxiosInstance();
@@ -15,36 +17,44 @@ const AllIssues = () => {
   const [loading, setLoading] = useState(true);
   const [sort, setSort] = useState("default");
   const [sort1, setSort1] = useState("default");
+  const [issueCount, setIssueCount] = useState(0);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     setLoading(true);
     axiosInstance
       .get("/issues", {
         params: {
-          search: search || undefined, // only include if search has value
+          search: search || undefined,
           category: sort !== "default" ? sort : undefined,
           status: sort1 !== "default" ? sort1 : undefined,
+          limit: limit,
+          skip: (page - 1) * limit,
         },
       })
       .then((res) => {
-        setIssues(res.data);
+        setIssueCount(res.data.count);
+        setIssues(res.data.issues);
         setLoading(false);
       })
       .catch(() => setLoading(false));
-  }, [axiosInstance, search, sort, sort1]);
+  }, [axiosInstance, search, sort, sort1, page]);
+
+  const totalPages = Math.ceil(issueCount / limit);
 
   const handelSearch = (e) => {
     e.preventDefault();
     let search = e.target.search.value;
     const trim = search.trim().toLocaleLowerCase();
     setSearch(trim);
+    setPage(1);
   };
 
   return (
-    <div>
+    <Container>
       <div>
         <MotionHeading>
-          All <span className="heading-primary">Issues</span>: {issues.length}
+          All <span className="heading-primary">Issues</span>: {issueCount}
         </MotionHeading>
         <Motion>
           <div className="text-center text-3xl font-bold mt-5 sm:mt-10 flex flex-col justify-center items-center">
@@ -145,7 +155,38 @@ const AllIssues = () => {
           </div>
         )}
       </div>
-    </div>
+      {totalPages > 1 && (
+        <div className="flex justify-center gap-2 mt-10 flex-wrap">
+          <button
+            disabled={page === 1}
+            onClick={() => setPage((p) => p - 1)}
+            className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+          >
+            Prev
+          </button>
+
+          {[...Array(totalPages)].map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setPage(i + 1)}
+              className={`px-4 py-2 rounded ${
+                page === i + 1 ? "bg-lime-500 text-white" : "bg-gray-200"
+              }`}
+            >
+              {i + 1}
+            </button>
+          ))}
+
+          <button
+            disabled={page === totalPages}
+            onClick={() => setPage((p) => p + 1)}
+            className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+          >
+            Next
+          </button>
+        </div>
+      )}
+    </Container>
   );
 };
 

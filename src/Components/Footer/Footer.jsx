@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <div>
       <Motion>
-        <footer className="footer footer-horizontal footer-center bg-gradient-to-r from-sky-800 to-sky-500 text-base-content rounded p-10 mt-10 font-semibold clip-footer">
+        <footer className="footer footer-horizontal footer-center bg-gradient-to-r from-sky-600 to-sky-300 text-base-content rounded p-10 mt-10 font-semibold clip-footer">
           <Link
             to={"/"}
             className="text-xl sm:text-2xl font-bold flex flex-row"

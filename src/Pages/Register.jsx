@@ -3,8 +3,13 @@ import useAuth from "../Hooks/useAuth";
 import { Link, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import Container from "../Components/Container/Container";
+import useAxiosInstance from "../Hooks/useAxiosInstance";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const Register = () => {
+  const axios = useAxiosInstance();
+  const axiosSec = useAxiosSecure();
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
 
@@ -25,11 +30,8 @@ const Register = () => {
     e.preventDefault();
     const displayName = e.target.name.value;
     const email = e.target.email?.value;
-    const photoURL = e.target.photo.value;
     const password = e.target.password?.value;
     const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z]).{6,}$/;
-    const photoURLRegex = /^https:\/\/.*\.(png|jpg|jpeg|gif|webp|svg)$/i;
-    console.log(displayName, photoURL);
 
     if (!passwordRegex.test(password)) {
       toast.error(
@@ -37,30 +39,45 @@ const Register = () => {
       );
       return;
     }
-    if (!photoURLRegex.test(photoURL)) {
-      toast.error("Inter Correct ImageURL");
-      return;
-    }
-    createUserWithEmailAndPasswordFunc(email, password)
-      .then((res) => {
-        toast("Successfully Sign Up");
-        navigate("/");
-        e.target.reset();
-        updateProfileFunc(displayName, photoURL)
-          .then(() => {
-            setLoader(false);
-            setUser({ ...res.user, displayName, photoURL });
-          })
-          .catch((err) => {
-            toast.error(err.message);
-          });
-      })
-      .catch((err) => {
-        setLoader(false);
-        if (err.code === "auth/email-already-in-use") {
-          toast.error("This Email is already used");
-        }
+    const photo = e.target.photo?.files[0];
+    const formData = new FormData();
+    formData.append("image", photo);
+
+    const uri = `https://api.imgbb.com/1/upload?key=${
+      import.meta.env.VITE_IMAGEBB_API
+    }`;
+    axios.post(uri, formData).then((res) => {
+      const photoURL = res.data.data.display_url;
+      const userData = {
+        displayName,
+        email,
+        photoURL,
+      };
+      setLoader(true);
+      axiosSec.post("/user", userData).then((res) => {
+        console.log(res.data);
       });
+      createUserWithEmailAndPasswordFunc(email, password)
+        .then((res) => {
+          toast("Successfully Sign Up");
+          navigate("/");
+          e.target.reset();
+          updateProfileFunc(displayName, photoURL)
+            .then(() => {
+              setLoader(false);
+              setUser({ ...res.user, displayName, photoURL });
+            })
+            .catch((err) => {
+              toast.error(err.message);
+            });
+        })
+        .catch((err) => {
+          setLoader(false);
+          if (err.code === "auth/email-already-in-use") {
+            toast.error("This Email is already used");
+          }
+        });
+    });
   };
 
   const handelSignInWithGoogle = () => {
@@ -76,113 +93,107 @@ const Register = () => {
       });
   };
   return (
-    <div>
-      <div className="flex justify-center items-center my-5">
-        <div className="card bg-transparent w-full max-w-sm shrink-0 shadow-2xl">
-          <div className="card-body">
-            <h3 className="text-3xl font-bold text-center text-sky-700">
-              Registration
-            </h3>
-            <form onSubmit={handelRegistration}>
-              <fieldset className="fieldset">
-                <label className="label">Name</label>
+    <Container>
+      <div className="flex justify-center items-center my-10 px-4">
+        <div className="w-full max-w-md">
+          <div className="card bg-transparent shadow-2xl border border-gray-200/30 rounded-2xl">
+            <div className="card-body text-center">
+              {/* Heading */}
+              <h2 className="text-3xl font-bold text-sky-700">
+                Create Account
+              </h2>
+              <p className="text-sm text-gray-500 mt-1 mb-6">
+                Already have an account?{" "}
+                <Link to="/login" className="text-sky-600 hover:underline">
+                  Log in
+                </Link>
+              </p>
+
+              {/* Google Sign Up */}
+              <button
+                onClick={handelSignInWithGoogle}
+                className="btn w-full bg-sky-100 text-black border border-gray-200 hover:bg-sky-200 flex items-center gap-3"
+              >
+                <svg width="16" height="16" viewBox="0 0 48 48">
+                  <path
+                    fill="#FFC107"
+                    d="M43.6 20.1H42V20H24v8h11.3C33.7 32.1 29.3 35 24 35c-6.1 0-11-4.9-11-11s4.9-11 11-11c2.8 0 5.4 1.1 7.4 2.9l5.7-5.7C33.6 6.7 28.9 5 24 5 12.4 5 3 14.4 3 26s9.4 21 21 21 21-9.4 21-21c0-1.4-.1-2.6-.4-3.9z"
+                  />
+                </svg>
+                Register with Google
+              </button>
+
+              {/* Divider */}
+              <div className="flex items-center gap-4 my-6">
+                <div className="h-px bg-gray-300 flex-1"></div>
+                <span className="text-gray-500 text-sm">or</span>
+                <div className="h-px bg-gray-300 flex-1"></div>
+              </div>
+
+              {/* Registration Form */}
+              <form
+                onSubmit={handelRegistration}
+                className="space-y-4 text-left"
+              >
                 <input
                   name="name"
                   type="text"
-                  className="input"
                   placeholder="Your Name"
                   required
+                  className="input input-bordered w-full"
                 />
-                <label className="label">Photo URL</label>
+
                 <input
-                  type="text"
                   name="photo"
-                  className="input"
-                  placeholder="Your Photo URL"
+                  type="file"
+                  placeholder="Photo URL"
                   required
+                  className="file-input file-input-md w-full"
                 />
-                <label className="label">Email</label>
+
                 <input
                   type="email"
                   name="email"
-                  className="input"
                   placeholder="Your Email"
                   autoComplete="username"
                   required
+                  className="input input-bordered w-full"
                 />
+
                 <div className="relative">
-                  <label className="label">Password</label>
                   <input
                     type={show ? "text" : "password"}
                     name="password"
-                    className="input"
                     placeholder="Password"
                     autoComplete="current-password"
                     required
+                    className="input input-bordered w-full pr-10"
                   />
                   <span
                     onClick={() => setShow(!show)}
-                    className="absolute mt-3 right-8"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer text-gray-500"
                   >
                     {show ? <FaEyeSlash /> : <FaEye />}
                   </span>
                 </div>
-                <button className="btn border-0 btn-primary hover:scale-105 mt-4">
+
+                <button className="btn btn-primary w-full hover:scale-105 transition">
                   Register
                 </button>
-              </fieldset>
-            </form>
-            <Link to={"/login"}>
-              Already Have an Account ?{" "}
-              <span className="text-sky-700">Log in</span>
-            </Link>
-            {user && <p className="text-green-500">Successfully Sign Up</p>}
-            {error && <p className="text-red-500">{error}</p>}
+              </form>
 
-            <div className="flex justify-between items-center">
-              <p className="border-b ml-14"></p>
-              <p className="text-center">or</p>
-              <p className="border-b mr-14"></p>
-            </div>
-            <div className="flex justify-center mt-5">
-              <button
-                onClick={handelSignInWithGoogle}
-                className="btn text-black border-[#e5e5e5] w-full bg-sky-100"
-              >
-                <svg
-                  aria-label="Google logo"
-                  width="16"
-                  height="16"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 512 512"
-                >
-                  <g>
-                    <path d="m0 0H512V512H0" fill="#fff"></path>
-                    <path
-                      fill="#34a853"
-                      d="M153 292c30 82 118 95 171 60h62v48A192 192 0 0190 341"
-                    ></path>
-                    <path
-                      fill="#4285f4"
-                      d="m386 400a140 175 0 0053-179H260v74h102q-7 37-38 57"
-                    ></path>
-                    <path
-                      fill="#fbbc02"
-                      d="m90 341a208 200 0 010-171l63 49q-12 37 0 73"
-                    ></path>
-                    <path
-                      fill="#ea4335"
-                      d="m153 219c22-69 116-109 179-50l55-54c-78-75-230-72-297 55"
-                    ></path>
-                  </g>
-                </svg>
-                Login with Google
-              </button>
+              {/* Messages */}
+              {user && (
+                <p className="text-green-500 text-sm mt-4">
+                  Successfully Signed Up 🎉
+                </p>
+              )}
+              {error && <p className="text-red-500 text-sm mt-4">{error}</p>}
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </Container>
   );
 };
 

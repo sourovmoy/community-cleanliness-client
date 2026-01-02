@@ -26,12 +26,6 @@ const Navbar = () => {
           <li className="font-semibold text-sky-400">
             <NavLink to={"/add-issues"}>Add Issues</NavLink>
           </li>
-          <li className="font-semibold text-sky-400">
-            <NavLink to={"/my-issues"}>My Issues</NavLink>
-          </li>
-          <li className="font-semibold text-sky-400">
-            <NavLink to={"/my-contribution"}>My Contribution</NavLink>
-          </li>
         </>
       )}
       <li className="font-semibold text-sky-400">
@@ -53,7 +47,7 @@ const Navbar = () => {
     setTheme(toggle ? "dark" : "light");
   };
   return (
-    <div className="navbar shadow-sm px-3 sm:px-10 z-20">
+    <div className="navbar shadow-sm px-3 sm:px-10 z-20 fixed top-0 left-0 right-0 bg-sky-200 dark:bg-sky-900">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -78,6 +72,19 @@ const Navbar = () => {
             className="menu menu-sm dropdown-content rounded-box bg-sky-100 mt-3 w-40 p-2 shadow items-center gap-2"
           >
             {links}
+            {user && (
+              <>
+                <li className="font-semibold text-sky-400">
+                  <NavLink to={"/add-issues"}>Add Issues</NavLink>
+                </li>
+                <li className="font-semibold text-sky-400">
+                  <NavLink to={"/my-issues"}>My Issues</NavLink>
+                </li>
+                <li className="font-semibold text-sky-400">
+                  <NavLink to={"/my-contribution"}>My Contribution</NavLink>
+                </li>
+              </>
+            )}
           </ul>
         </div>
 
@@ -164,6 +171,21 @@ const Navbar = () => {
                 <li>
                   <p className="font-semibold text-sky-400">{user?.email}</p>
                 </li>
+                <hr />
+                {user && (
+                  <>
+                    <li className="font-semibold text-sky-400">
+                      <NavLink to={"/add-issues"}>Add Issues</NavLink>
+                    </li>
+                    <li className="font-semibold text-sky-400">
+                      <NavLink to={"/my-issues"}>My Issues</NavLink>
+                    </li>
+                    <li className="font-semibold text-sky-400">
+                      <NavLink to={"/my-contribution"}>My Contribution</NavLink>
+                    </li>
+                  </>
+                )}
+
                 <li>
                   <button
                     onClick={handelSignOut}

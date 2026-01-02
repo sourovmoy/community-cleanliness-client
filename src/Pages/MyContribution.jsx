@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from "react";
-import useAxiosInstance from "../Hooks/useAxiosInstance";
 import jsPDF from "jspdf";
 import useAuth from "../Hooks/useAuth";
 import { Atom } from "react-loading-indicators";
 import { FaFileDownload } from "react-icons/fa";
 import Motion from "../Components/Motion/Motion";
 import MotionHeading from "../Components/Motion/MotionHeading";
+import Container from "../Components/Container/Container";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const MyContribution = () => {
-  const { user, loader, setLoader } = useAuth();
+  const { loader, setLoader } = useAuth();
   const [contributions, setContributions] = useState([]);
-  const axiosInstance = useAxiosInstance();
+  const axiosInstance = useAxiosSecure();
   useEffect(() => {
-    axiosInstance.get(`/contribution?email=${user?.email}`).then((res) => {
+    axiosInstance.get(`/contribution`).then((res) => {
       setContributions(res.data);
       setLoader(false);
     });
-  }, [axiosInstance, setLoader, user]);
+  }, [axiosInstance, setLoader]);
 
   const handelDownload = (payment) => {
     const doc = new jsPDF();
@@ -45,14 +46,14 @@ const MyContribution = () => {
   };
 
   return (
-    <div>
+    <Container>
       <MotionHeading>
         My <span className="heading-primary">Contribution</span>: (
         {contributions.length})
       </MotionHeading>
       <div>
         <Motion>
-          <div className="max-w-6xl mx-auto p-4 sm:p-6 mt-8  shadow-lg rounded-2xl overflow-x-auto">
+          <div className="shadow-lg rounded-2xl overflow-x-auto mt-10">
             <table className="min-w-full table-auto border-collapse">
               <thead className="bg-sky-700">
                 <tr className="  text-sm sm:text-base">
@@ -119,7 +120,7 @@ const MyContribution = () => {
           </div>
         </Motion>
       </div>
-    </div>
+    </Container>
   );
 };
 

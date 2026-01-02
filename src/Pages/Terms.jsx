@@ -5,7 +5,7 @@ import MotionHeading from "../Components/Motion/MotionHeading";
 const Terms = () => {
   return (
     <Motion>
-      <div className="min-h-screen flex flex-col items-center px-4 sm:px-6 py-10">
+      <div className="min-h-screen flex flex-col items-center px-4 sm:px-6 py-10 mt-10">
         <MotionHeading>
           <p className="heading-primary mb-8">Terms & Conditions</p>
         </MotionHeading>

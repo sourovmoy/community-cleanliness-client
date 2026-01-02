@@ -8,6 +8,7 @@ import Motion from "../Components/Motion/Motion";
 import MotionHeading from "../Components/Motion/MotionHeading";
 import { FaArrowRight } from "react-icons/fa";
 import SkeletonIssueCard from "../Components/Skeleton/SkeletonIssueCard";
+import Container from "../Components/Container/Container";
 
 const Home = () => {
   const [issues, setIssues] = useState();
@@ -57,68 +58,70 @@ const Home = () => {
   }, [setIssues, axiosInstance, setLoading]);
 
   return (
-    <div className="min-h-screen">
+    <div className="">
       <Banner />
-      <section className="py-12">
-        <div className="max-w-6xl mx-auto px-4 text-center">
-          <MotionHeading>
-            Explore Issue<span className="heading-primary"> Categories</span>
-          </MotionHeading>
+      <Container>
+        <section className="py-12">
+          <div className="max-w-6xl mx-auto px-4 text-center">
+            <MotionHeading>
+              Explore Issue<span className="heading-primary"> Categories</span>
+            </MotionHeading>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-5 sm:mt-10">
-            {categories.map((cat) => (
-              <Motion>
-                <div
-                  key={cat.id}
-                  className={`bg-gradient-to-r ${cat.color}  rounded-2xl shadow-lg p-6 flex flex-col items-center transition-all transform hover:-translate-y-2 hover:shadow-2xl`}
-                >
-                  <img
-                    src={cat.image}
-                    alt={cat.name}
-                    className="w-20 h-20 mb-4 drop-shadow-md"
-                  />
-                  <h3 className="text-xl font-semibold mb-2">{cat.name}</h3>
-                  <p className="text-sm opacity-90">{cat.description}</p>
-                  <Link
-                    to={"/add-issues"}
-                    className="mt-4 bg-white text-gray-800 font-semibold py-2 px-4 rounded-lg hover:bg-gray-100 transition"
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-5 sm:mt-10">
+              {categories.map((cat, idx) => (
+                <Motion>
+                  <div
+                    key={idx}
+                    className={`bg-gradient-to-r ${cat.color}  rounded-2xl shadow-lg p-6 flex flex-col items-center transition-all transform hover:-translate-y-2 hover:shadow-2xl`}
                   >
-                    Report Issue
-                  </Link>
-                </div>
-              </Motion>
-            ))}
-          </div>
-        </div>
-      </section>
-      <section>
-        <MotionHeading>
-          Recent<span className="heading-primary"> Issues</span>
-        </MotionHeading>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-8 mt-5 sm:mt-14">
-          {loading ? (
-            Array.from({ length: 8 }, (_, i) => <SkeletonIssueCard key={i} />)
-          ) : issues ? (
-            issues.map((issue) => (
-              <Motion>
-                <IssueCard issue={issue}></IssueCard>
-              </Motion>
-            ))
-          ) : (
-            <div className="text-4xl flex justify-center">
-              <h1>No Issue Found</h1>
+                    <img
+                      src={cat.image}
+                      alt={cat.name}
+                      className="w-20 h-20 mb-4 drop-shadow-md"
+                    />
+                    <h3 className="text-xl font-semibold mb-2">{cat.name}</h3>
+                    <p className="text-sm opacity-90">{cat.description}</p>
+                    <Link
+                      to={"/add-issues"}
+                      className="mt-4 bg-white text-gray-800 font-semibold py-2 px-4 rounded-lg hover:bg-gray-100 transition"
+                    >
+                      Report Issue
+                    </Link>
+                  </div>
+                </Motion>
+              ))}
             </div>
-          )}
-        </div>
-        <div className="flex justify-center mt-5">
-          <Link to={"/all-issues"} className="btn-primary flex items-center">
-            See more <FaArrowRight />
-          </Link>
-        </div>
-      </section>
-      <Motion>
-        <CommunitySection />
-      </Motion>
+          </div>
+        </section>
+        <section>
+          <MotionHeading>
+            Recent<span className="heading-primary"> Issues</span>
+          </MotionHeading>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-5 sm:mt-14">
+            {loading ? (
+              Array.from({ length: 8 }, (_, i) => <SkeletonIssueCard key={i} />)
+            ) : issues ? (
+              issues.map((issue) => (
+                <Motion>
+                  <IssueCard issue={issue}></IssueCard>
+                </Motion>
+              ))
+            ) : (
+              <div className="text-4xl flex justify-center">
+                <h1>No Issue Found</h1>
+              </div>
+            )}
+          </div>
+          <div className="flex justify-center mt-5">
+            <Link to={"/all-issues"} className="btn-primary flex items-center">
+              See more <FaArrowRight />
+            </Link>
+          </div>
+        </section>
+        <Motion>
+          <CommunitySection />
+        </Motion>
+      </Container>
     </div>
   );
 };

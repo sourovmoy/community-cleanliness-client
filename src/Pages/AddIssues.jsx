@@ -4,6 +4,7 @@ import useAxiosInstance from "../Hooks/useAxiosInstance";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
 import MotionHeading from "../Components/Motion/MotionHeading";
+import Container from "../Components/Container/Container";
 
 const AddIssues = () => {
   const { user } = useAuth();
@@ -53,7 +54,7 @@ const AddIssues = () => {
   };
 
   return (
-    <div>
+    <Container>
       <div>
         <MotionHeading>
           Add <span className="heading-primary">Issues</span>
@@ -159,7 +160,7 @@ const AddIssues = () => {
           </form>
         </div>
       </div>
-    </div>
+    </Container>
   );
 };
 

@@ -12,9 +12,9 @@ const HomeLayOut = () => {
         <Navbar />
       </header>
       <main>
-        <Container>
-          <Outlet />
-        </Container>
+        {/* <Container> */}
+        <Outlet />
+        {/* </Container> */}
       </main>
       <footer>
         <Footer />

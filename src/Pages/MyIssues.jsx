@@ -1,23 +1,26 @@
 import React, { useEffect, useState } from "react";
-import useAxiosInstance from "../Hooks/useAxiosInstance";
+
 import useAuth from "../Hooks/useAuth";
 import Swal from "sweetalert2";
 import Motion from "../Components/Motion/Motion";
 import MotionHeading from "../Components/Motion/MotionHeading";
+import Container from "../Components/Container/Container";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
+import TableSkeleton from "../Components/Skeleton/TableSkeleton";
 
 const MyIssues = () => {
   const { user, setLoader } = useAuth();
   const [refresh, setRefresh] = useState(true);
   const [id, setId] = useState(null);
-  const axiosInstance = useAxiosInstance();
+  const axiosInstance = useAxiosSecure();
   const [myIssues, setMyIssues] = useState([]);
 
   useEffect(() => {
-    axiosInstance.get(`/issues?email=${user?.email}`).then((res) => {
+    axiosInstance.get(`/my-issues`).then((res) => {
       setMyIssues(res.data);
       setLoader(false);
     });
-  }, [axiosInstance, user, setMyIssues, refresh, setLoader]);
+  }, [axiosInstance, setMyIssues, refresh, setLoader]);
 
   const handelOpenModal = (id) => {
     setId(id);
@@ -50,8 +53,6 @@ const MyIssues = () => {
     };
 
     axiosInstance.patch(`/issues/${_id}`, updateIssue).then((res) => {
-      console.log(res.data);
-
       if (res.data.acknowledged) {
         document.getElementById(id).close();
         setRefresh(!refresh);
@@ -100,31 +101,33 @@ const MyIssues = () => {
     });
   };
   return (
-    <div>
-      <div>
-        <h1 className="mb-5 sm:mb-10">
-          <MotionHeading>
-            My <span className="heading-primary">Issues</span> :(
-            {myIssues.length})
-          </MotionHeading>
-        </h1>
-        {myIssues.length === 0 ? (
-          <p className="text-center text-gray-500">No issues found.</p>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="table w-full rounded-xl overflow-hidden shadow-md">
-              <thead className="bg-sky-700 ">
-                <tr>
-                  <th>Image</th>
-                  <th>Title</th>
-                  <th>Category</th>
-                  <th>Amount</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {myIssues.map((issue) => (
+    <Container>
+      <h1 className="mb-5 sm:mb-10">
+        <MotionHeading>
+          My <span className="heading-primary">Issues</span> :(
+          {myIssues.length})
+        </MotionHeading>
+      </h1>
+      {myIssues.length === 0 ? (
+        <p className="text-center text-gray-500">No issues found.</p>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="table w-full rounded-xl overflow-hidden shadow-md">
+            <thead className="bg-sky-700 ">
+              <tr>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {myIssues.length === 0 ? (
+                <p>No issues found.</p>
+              ) : (
+                myIssues.map((issue) => (
                   <tr key={issue._id} className=" items-center">
                     <td>
                       <img
@@ -293,13 +296,13 @@ const MyIssues = () => {
                       </button>
                     </td>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
-    </div>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </Container>
   );
 };
 
