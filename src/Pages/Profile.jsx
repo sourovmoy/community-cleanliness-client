@@ -81,7 +81,6 @@ const Profile = () => {
           >
             {role}
           </p>
-          .
           <h2 className="mt-4 text-xl font-semibold text-gray-800 dark:text-gray-100">
             {user?.displayName || "Your Name"}
           </h2>
