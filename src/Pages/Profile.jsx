@@ -50,15 +50,16 @@ const Profile = () => {
   };
 
   return (
-    <div className="flex justify-center px-4 py-10">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-6">
-        {/* Avatar */}
-        <p className="font-medium">
-          <Link to="/" className="flex items-center gap-1">
+    <div className="flex justify-center px-4 py-10 bg-gray-100 dark:bg-gray-900 min-h-screen">
+      <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
+        {/* Back Link */}
+        <p className="font-medium text-gray-700 dark:text-gray-300 mb-4">
+          <Link to="/" className="flex items-center gap-1 hover:text-primary">
             <FaArrowLeft /> Go to home
           </Link>
         </p>
 
+        {/* Avatar */}
         <div className="flex flex-col items-center mb-6">
           <div className="avatar">
             <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
@@ -72,34 +73,40 @@ const Profile = () => {
             </div>
           </div>
 
-          <h2 className="mt-4 text-xl font-semibold">
+          <h2 className="mt-4 text-xl font-semibold text-gray-800 dark:text-gray-100">
             {user?.displayName || "Your Name"}
           </h2>
-          <p className="text-sm text-gray-500">{user?.email}</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            {user?.email}
+          </p>
         </div>
 
         {/* Form */}
         <form onSubmit={handleUpdateProfile} className="space-y-4">
           <div>
             <label className="label">
-              <span className="label-text">Full Name</span>
+              <span className="label-text text-gray-700 dark:text-gray-300">
+                Full Name
+              </span>
             </label>
             <input
               name="name"
               type="text"
-              className="input input-bordered w-full"
+              className="input input-bordered w-full bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600"
               placeholder="Enter your name"
             />
           </div>
 
           <div>
             <label className="label">
-              <span className="label-text">Profile Photo</span>
+              <span className="label-text text-gray-700 dark:text-gray-300">
+                Profile Photo
+              </span>
             </label>
             <input
               name="photo"
               type="file"
-              className="file-input file-input-md w-full"
+              className="file-input file-input-md w-full file-input-bordered bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-gray-600"
               accept="image/*"
             />
           </div>
