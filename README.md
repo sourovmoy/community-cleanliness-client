@@ -1,45 +1,139 @@
 <p align="center">
-  <img src="./community-cleanliness-issues-report.netlify.app_.png" alt="GitHub Banner" />
+  <img src="./localhost_5173_ (2).png" alt="GitHub Banner" />
 </p>
-
-
-# Community Cleanliness &amp; Issue Reporting Portal
 
 **Live Site URL:** [https://community-cleanliness-issues-report.netlify.app/](https://community-cleanliness-issues-report.netlify.app/)
 
-## 📖 About the Project
+# Community Cleanliness &amp; Issue Reporting Portal
 
-GreenNest is a community-driven web platform that allows users to report, track, and manage local environmental or infrastructural issues — such as garbage, road damage, or waterlogging.  
-It empowers citizens to take part in maintaining a cleaner, safer, and greener community.
+# 🧹 Community Cleanliness Platform
+
+A full-stack **MERN application** designed to help communities report cleanliness issues, contribute financially to solutions, and track impact — powered by a secure **User & Admin Dashboard**.
+
+---
+
+## 🔗 Project Overview
+
+The Community Cleanliness Platform allows users to:
+
+- Report local cleanliness issues
+- Contribute money to resolve issues
+- Track issue progress and contributions
+- Manage profiles securely
+
+Admins can:
+
+- Monitor all issues and users
+- Analyze contribution statistics
+- View aggregated financial data per issue
 
 ---
 
 ## 🚀 Features
 
-- 🧾 **Report Issues:** Users can submit detailed reports with title, category, location, image, and description.
-- 🧍 **User Dashboard:** Displays issues submitted by the logged-in user only for secure data management.
-- ✏️ **Update & Delete:** Easily update or delete your own reported issues through interactive modals.
-- 💸 **Contribution Tracking:** Users can view their cleanup payment history in a responsive table format.
-- 📄 **PDF Report Download:** Generate and download contribution reports using **jsPDF** for record-keeping.
-- 🌈 **Responsive Design:** Fully optimized for desktop, tablet, and mobile devices using **Tailwind CSS**.
+### 🔐 Authentication & Security
+
+- Firebase Authentication (Email/Password & Google)
+- JWT-based API security
+- Role-based access control (User / Admin)
+- Protected backend routes using Firebase Admin SDK
 
 ---
 
-## 🛠️ Technologies Used
+## 👤 User Features
 
-- React.js
+### 📝 Issue Management
+
+- Create, update, delete, and view issues
+- Filter issues by category, status, and search
+- View recent issues on the homepage
+
+### 💰 Contributions
+
+- Contribute money to community issues
+- View personal contribution history
+- Track total contribution per issue
+
+### 📊 User Dashboard
+
+- Total issues created
+- Contribution summary
+- Interactive charts using **Recharts**
+- Responsive statistics cards and tables
+
+### 👤 Profile Management
+
+- Update display name
+- Upload & update profile photo (ImgBB integration)
+- Firebase profile + MongoDB sync
+- Secure profile update using JWT authorization
+
+---
+
+## 🛠️ Admin Features
+
+### 📈 Admin Dashboard
+
+- Total users count
+- Total issues count
+- Total contributions overview
+
+### 💵 Contribution Analytics
+
+- Aggregated total contribution per issue
+- Issue-wise contribution summaries
+- Responsive admin tables
+
+### 🧑‍💼 User Management
+
+- Role-based access (Admin / User)
+- Secure admin-only routes
+- Firebase token verification
+
+---
+
+## 📊 Statistics & Visualization
+
+- Bar charts & data visualization using **Recharts**
+- Responsive layouts for all screen sizes
+- Clean UI using **Tailwind CSS + DaisyUI**
+
+---
+
+## 🧰 Tech Stack
+
+### Frontend
+
+- React
+- React Router
 - Tailwind CSS
 - DaisyUI
+- Recharts
+- Axios
+- Firebase Authentication
+
+### Backend
+
+- Node.js
 - Express.js
 - MongoDB
-- jsPDF
+- Firebase Admin SDK
+- JWT Authentication
 
 ---
 
-## 💚 Contribution
+## 🔐 Security Implementation
 
-Feel free to fork, contribute, or suggest improvements through pull requests. Together, we can build a greener community!
+- Firebase ID token verification
+- Secure Axios interceptor for JWT
+- Backend middleware for:
+  - JWT verification
+  - Admin role validation
 
 ---
 
 **Developed by:** Sourovmoy Sanju 🌱
+
+```
+
+```
