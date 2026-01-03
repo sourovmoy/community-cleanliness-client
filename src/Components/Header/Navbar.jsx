@@ -1,21 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link, NavLink } from "react-router";
 import useAuth from "../../Hooks/useAuth";
 import UserDropdown from "../UserDropdown/UserDropdown";
 import useRole from "../../Hooks/useRole";
-import Loading from "../Loading/Loading";
+import { useTheme } from "../../Context/ThemeContext";
 
 const Navbar = () => {
   const { user, signOutFunc, loader } = useAuth();
   const { role } = useRole();
-
-  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
-
-  useEffect(() => {
-    const html = document.querySelector("html");
-    html.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
-  }, [theme]);
+  const { theme, toggleTheme } = useTheme();
 
   const links = (
     <>
@@ -47,11 +40,6 @@ const Navbar = () => {
       .catch((err) => console.log(err.message));
   };
 
-  const handelTheme = (e) => {
-    const toggle = e.target.checked;
-    setTheme(toggle ? "dark" : "light");
-  };
-
   return (
     <div className="navbar shadow-sm px-3 sm:px-10 z-20 fixed top-0 left-0 right-0 bg-sky-200 dark:bg-sky-900">
       <div className="navbar-start">
@@ -78,19 +66,6 @@ const Navbar = () => {
             className="menu menu-sm dropdown-content rounded-box bg-sky-100 mt-3 w-40 p-2 shadow items-center gap-2"
           >
             {links}
-            {user && (
-              <>
-                <li className="font-semibold text-sky-400">
-                  <NavLink to={"/add-issues"}>Add Issues</NavLink>
-                </li>
-                <li className="font-semibold text-sky-400">
-                  <NavLink to={"/my-issues"}>My Issues</NavLink>
-                </li>
-                <li className="font-semibold text-sky-400">
-                  <NavLink to={"/my-contribution"}>My Contribution</NavLink>
-                </li>
-              </>
-            )}
           </ul>
         </div>
 
@@ -103,7 +78,7 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1 items-center ">
           <label className="toggle text-base-content">
             <input
-              onClick={handelTheme}
+              onClick={toggleTheme}
               type="checkbox"
               value="synthwave"
               defaultChecked={localStorage.getItem("theme") === "dark"}
@@ -189,7 +164,7 @@ const Navbar = () => {
               <div className="flex justify-between mx-4">
                 <p className=" text-sky-400 font-semibold">Theme</p>
                 <input
-                  onClick={handelTheme}
+                  onClick={toggleTheme}
                   type="checkbox"
                   defaultChecked={localStorage.getItem("theme") === "dark"}
                   className="toggle"
@@ -236,7 +211,7 @@ const Navbar = () => {
         ) : (
           <>
             <input
-              onClick={handelTheme}
+              onClick={toggleTheme}
               type="checkbox"
               defaultChecked={localStorage.getItem("theme") === "dark"}
               className="toggle"
