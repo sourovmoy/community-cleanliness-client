@@ -79,7 +79,7 @@ const AllIssues = () => {
                 Create Issues
               </Link>
               <Link
-                to={"/my-issues"}
+                to={"/dashboard/user/my-issues"}
                 className="btn bg-white dark:bg-gray-200 border-sky-400 outline-1 outline-sky-900 text-sky-900 my-3 hover:scale-102 hover:shadow-lg duration-300"
               >
                 My Issues

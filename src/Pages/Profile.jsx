@@ -5,9 +5,11 @@ import useAxiosSecure from "../Hooks/useAxiosSecure";
 import { toast } from "react-toastify";
 import { Link } from "react-router";
 import { FaArrowLeft } from "react-icons/fa";
+import useRole from "../Hooks/useRole";
 
 const Profile = () => {
   const { user, updateProfileFunc, setLoader, loader, setUser } = useAuth();
+  const { role } = useRole();
   const axiosPublic = useAxiosInstance();
   const axiosSecure = useAxiosSecure();
 
@@ -72,7 +74,14 @@ const Profile = () => {
               />
             </div>
           </div>
-
+          <p
+            className={`font-bold ${
+              role === "admin" ? "text-yellow-500" : "text-green-500"
+            }`}
+          >
+            {role}
+          </p>
+          .
           <h2 className="mt-4 text-xl font-semibold text-gray-800 dark:text-gray-100">
             {user?.displayName || "Your Name"}
           </h2>
