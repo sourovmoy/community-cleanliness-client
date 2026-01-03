@@ -1,11 +1,11 @@
 import React from "react";
 import { NavLink } from "react-router";
 import useRole from "../../Hooks/useRole";
-import Loading from "../Loading/Loading";
 
 const UserDropdown = ({ user, handelSignOut }) => {
   const { role, roleLoader } = useRole();
-  if (roleLoader) return <Loading />;
+  if (roleLoader)
+    return <span className="loading loading-spinner loading-md"></span>;
   return (
     <div className="dropdown dropdown-end">
       <div tabIndex={0} role="button" className="">
