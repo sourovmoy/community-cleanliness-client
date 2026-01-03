@@ -11,6 +11,7 @@ import MotionHeading from "../Components/Motion/MotionHeading";
 import SkeletonDetail from "../Components/Skeleton/SkeletonDetails";
 import PayContributionModal from "../Components/Modals/PayContributionModal";
 import { toast } from "react-toastify";
+import Container from "../Components/Container/Container";
 
 const IssueDetails = () => {
   const navigate = useNavigate();
@@ -81,7 +82,7 @@ const IssueDetails = () => {
   };
 
   return (
-    <div>
+    <Container>
       <MotionHeading>
         Issues : <span className="heading-primary ">{issue.title}</span>
       </MotionHeading>
@@ -168,7 +169,7 @@ const IssueDetails = () => {
                 {/* Contribute Button */}
                 <button
                   onClick={() => openModal(issue._id)}
-                  className="mt-6 w-full bg-gradient-to-r from-sky-500 to-green-500 hover:from-sky-600 hover:to-green-600 text-white font-semibold py-2.5 rounded-lg transition duration-200 text-sm sm:text-base dark:shadow-[0_0_15px_rgba(56,189,248,0.5)]"
+                  className="mt-6 w-full btn-primary text-white font-semibold py-2.5 rounded-lg transition duration-200 text-sm sm:text-base dark:shadow-[0_0_15px_rgba(56,189,248,0.5)]"
                 >
                   Pay Clean-Up Contribution
                 </button>
@@ -191,7 +192,7 @@ const IssueDetails = () => {
         user={user}
         handelContribution={handelContribution}
       />
-    </div>
+    </Container>
   );
 };
 

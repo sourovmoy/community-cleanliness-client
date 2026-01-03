@@ -4,7 +4,7 @@ const PayContributionModal = ({ issue, user, handelContribution }) => {
   return (
     <dialog id={issue?._id} className="modal modal-bottom sm:modal-middle">
       <div className="modal-box">
-        <div className="p-6 sm:p-8  dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 max-w-lg w-full mx-auto transition-all duration-300">
+        <div className="p-6 sm:p-8  dark:bg-gray-900 max-w-lg w-full mx-auto transition-all duration-300">
           <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-center bg-gradient-to-r from-sky-500 to-green-500 bg-clip-text text-transparent">
             Contribute to Clean-Up
           </h2>
@@ -115,7 +115,7 @@ const PayContributionModal = ({ issue, user, handelContribution }) => {
 
             <button
               type="submit"
-              className="w-full py-3 rounded-lg font-semibold text-white bg-gradient-to-r from-sky-500 to-green-500 hover:from-sky-600 hover:to-green-600 transition duration-300 shadow-lg hover:shadow-sky-500/30 dark:shadow-green-500/20"
+              className="w-full py-3 rounded-lg font-semibold text-white btn-primary transition duration-300 shadow-lg hover:shadow-sky-500/30 dark:shadow-green-500/20"
             >
               Submit Contribution
             </button>

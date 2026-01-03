@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
 
-import useAuth from "../Hooks/useAuth";
+import useAuth from "../../../Hooks/useAuth";
 import Swal from "sweetalert2";
-import Motion from "../Components/Motion/Motion";
-import MotionHeading from "../Components/Motion/MotionHeading";
-import Container from "../Components/Container/Container";
-import useAxiosSecure from "../Hooks/useAxiosSecure";
-import TableSkeleton from "../Components/Skeleton/TableSkeleton";
+import MotionHeading from "../../../Components/Motion/MotionHeading";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
 const MyIssues = () => {
   const { user, setLoader } = useAuth();
@@ -101,7 +98,7 @@ const MyIssues = () => {
     });
   };
   return (
-    <Container>
+    <div>
       <h1 className="mb-5 sm:mb-10">
         <MotionHeading>
           My <span className="heading-primary">Issues</span> :(
@@ -302,7 +299,7 @@ const MyIssues = () => {
           </table>
         </div>
       )}
-    </Container>
+    </div>
   );
 };
 

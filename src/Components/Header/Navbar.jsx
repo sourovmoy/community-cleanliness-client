@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router";
 import useAuth from "../../Hooks/useAuth";
+import UserDropdown from "../UserDropdown/UserDropdown";
+import useRole from "../../Hooks/useRole";
+import Loading from "../Loading/Loading";
 
 const Navbar = () => {
   const { user, signOutFunc, loader } = useAuth();
+  const { role } = useRole();
+
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
   useEffect(() => {
@@ -46,6 +51,7 @@ const Navbar = () => {
     const toggle = e.target.checked;
     setTheme(toggle ? "dark" : "light");
   };
+
   return (
     <div className="navbar shadow-sm px-3 sm:px-10 z-20 fixed top-0 left-0 right-0 bg-sky-200 dark:bg-sky-900">
       <div className="navbar-start">
@@ -150,52 +156,7 @@ const Navbar = () => {
           {loader ? (
             <span className="loading loading-spinner loading-md"></span>
           ) : user ? (
-            <div className="dropdown dropdown-end">
-              <div tabIndex={0} role="button" className="">
-                <img
-                  className="h-11 w-11 rounded-full outline-3 outline-sky-600"
-                  src={user?.photoURL}
-                  alt=""
-                  referrerPolicy="no-referrer"
-                />
-              </div>
-              <ul
-                tabIndex="-1"
-                className="dropdown-content menu bg-base-100 rounded-box z-10 w-auto p-2 shadow-sm"
-              >
-                <li>
-                  <p className="font-semibold text-sky-400">
-                    {user?.displayName}
-                  </p>
-                </li>
-                <li>
-                  <p className="font-semibold text-sky-400">{user?.email}</p>
-                </li>
-                <hr />
-                {user && (
-                  <>
-                    <li className="font-semibold text-sky-400">
-                      <NavLink to={"/add-issues"}>Add Issues</NavLink>
-                    </li>
-                    <li className="font-semibold text-sky-400">
-                      <NavLink to={"/my-issues"}>My Issues</NavLink>
-                    </li>
-                    <li className="font-semibold text-sky-400">
-                      <NavLink to={"/my-contribution"}>My Contribution</NavLink>
-                    </li>
-                  </>
-                )}
-
-                <li>
-                  <button
-                    onClick={handelSignOut}
-                    className="btn-primary mx-2 text-center"
-                  >
-                    Logout
-                  </button>
-                </li>
-              </ul>
-            </div>
+            <UserDropdown user={user} handelSignOut={handelSignOut} />
           ) : (
             <>
               <Link to="/login" className="btn-primary mr-2">
@@ -241,6 +202,29 @@ const Navbar = () => {
               </li>
               <li>
                 <p className="font-semibold text-sky-400">{user?.email}</p>
+              </li>
+              <hr />
+              <li>
+                {role === "user" && (
+                  <li>
+                    <NavLink
+                      to="/dashboard/user"
+                      className="font-semibold text-sky-400 mt-5"
+                    >
+                      Dashboard
+                    </NavLink>
+                  </li>
+                )}
+                {role === "admin" && (
+                  <li>
+                    <NavLink
+                      to="/dashboard/admin"
+                      className="font-semibold text-sky-400 mt-5"
+                    >
+                      Dashboard
+                    </NavLink>
+                  </li>
+                )}
               </li>
               <li>
                 <Link onClick={handelSignOut} className="btn-primary">

@@ -6,10 +6,11 @@ import Swal from "sweetalert2";
 import useAxiosInstance from "../Hooks/useAxiosInstance";
 import { toast } from "react-toastify";
 import Container from "../Components/Container/Container";
+import useRole from "../Hooks/useRole";
 
 const Login = () => {
   const emailRef = useRef(null);
-
+  const { role } = useRole();
   const navigate = useNavigate();
   const axiosInstance = useAxiosInstance();
   const {
@@ -22,7 +23,39 @@ const Login = () => {
     signInWithEmailAndPasswordFunc,
   } = useAuth();
   const [show, setShow] = useState(false);
-  console.log(user);
+  const predefinedUsers = {
+    user: {
+      email: "sehyfatet@mailinator.com",
+      password: "sehyfatet@mailinator.coM",
+    }, // replace with real
+    admin: {
+      email: "fucakocoj@mailinator.com",
+      password: "fucakocoj@mailinator.coM",
+    }, // replace with real
+  };
+
+  // Function to login as user/admin
+  const loginAs = (role) => {
+    const credentials = predefinedUsers[role];
+    if (!credentials) return;
+
+    setError("");
+    setUser(null);
+    signInWithEmailAndPasswordFunc(credentials.email, credentials.password)
+      .then(() => {
+        setLoader(false);
+        if (role) {
+          navigate(`/dashboard/${role}`);
+        } else {
+          navigate("/");
+        }
+      })
+      .catch((err) => {
+        console.log(err.code);
+        setLoader(false);
+        toast.error("Login failed: " + err.message);
+      });
+  };
 
   const handelSignin = (e) => {
     setError("");
@@ -33,7 +66,13 @@ const Login = () => {
     signInWithEmailAndPasswordFunc(email, password)
       .then(() => {
         setLoader(false);
-        navigate("/");
+        if (role === "admin") {
+          navigate(`/dashboard/${role}`);
+        } else if (role === "user") {
+          navigate(`/dashboard/${role}`);
+        } else {
+          navigate("/");
+        }
       })
       .catch((err) => {
         console.log(err.code);
@@ -74,15 +113,13 @@ const Login = () => {
 
   return (
     <Container>
-      <div className="flex items-center justify-center px-4 py-10">
-        <div className="sm:w-[30vw] w-full text-center  shadow-2xl rounded-2xl p-8">
+      <div className="flex items-center justify-center min-h-screen px-4 pt-10">
+        <div className="sm:w-[28rem] w-full text-center shadow-2xl rounded-2xl p-8 space-y-6">
           {/* Heading */}
-          <h2 className="text-3xl heading-primary font-bold mb-2">
-            Log in to Riverside
-          </h2>
-          <p className="text-sm text-gray-400 mb-6">
+          <h2 className="text-3xl heading-primary font-bold mb-2">Log in</h2>
+          <p className="text-sm text-gray-600">
             Don’t have an account?{" "}
-            <Link to="/register" className="text-purple-400 hover:underline">
+            <Link to="/register" className="text-sky-500 hover:underline">
               Sign up
             </Link>
           </p>
@@ -91,7 +128,7 @@ const Login = () => {
           <div className="space-y-3">
             <button
               onClick={handelGoogleSingIn}
-              className="w-full flex items-center justify-center gap-3 transition rounded-xl py-3 font-medium shadow-xl bg-neutral-800 hover:bg-neutral-700 text-white"
+              className="w-full flex items-center justify-center gap-3 py-3 rounded-xl border border-gray-300 hover:bg-gray-100 transition font-medium"
             >
               <svg width="18" height="18" viewBox="0 0 48 48">
                 <path
@@ -104,10 +141,10 @@ const Login = () => {
           </div>
 
           {/* Divider */}
-          <div className="flex items-center gap-4 my-6 text-gray-500">
-            <div className="h-px bg-gray-700 flex-1"></div>
+          <div className="flex items-center gap-4 my-6 text-gray-400">
+            <div className="h-px bg-gray-300 flex-1"></div>
             <span className="text-sm">Or</span>
-            <div className="h-px bg-gray-700 flex-1"></div>
+            <div className="h-px bg-gray-300 flex-1"></div>
           </div>
 
           {/* Form */}
@@ -118,7 +155,7 @@ const Login = () => {
               name="email"
               placeholder="Email"
               required
-              className="w-full rounded-xl bg-neutral-800 px-4 py-3 text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
 
             <div className="relative">
@@ -128,35 +165,51 @@ const Login = () => {
                 placeholder="Password"
                 required
                 autoComplete="current-password"
-                className="w-full rounded-xl  px-4 py-3 text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
               <span
                 onClick={() => setShow(!show)}
-                className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer text-gray-400"
+                className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer text-gray-500"
               >
                 {show ? <FaEyeSlash /> : <FaEye />}
               </span>
             </div>
 
-            <button className="w-full btn-primary transition text-white font-semibold py-3 rounded-xl">
+            <button className="w-full border btn-primary font-semibold py-3 rounded-xl hover:bg-purple-50 transition">
               Log in
             </button>
+            <hr />
+            <p className="text-center">Credential </p>
+            <div className="flex justify-center gap-10">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => loginAs("user")}
+              >
+                User
+              </button>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => loginAs("admin")}
+              >
+                Admin
+              </button>
+            </div>
           </form>
 
           {/* Footer Links */}
-          <div className="mt-6 space-y-2 text-sm">
-            <button className="text-gray-400 hover:underline">
-              Forgot password?
-            </button>
+          <div className="mt-4 text-sm text-gray-500">
+            <button className="hover:underline">Forgot password?</button>
           </div>
 
           {/* Status Messages */}
           {user && (
-            <p className="text-green-400 text-sm mt-4">
+            <p className="text-green-500 text-sm mt-2">
               Successfully Signed In
             </p>
           )}
-          {error && <p className="text-red-400 text-sm mt-4">{error}</p>}
+          {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
         </div>
       </div>
     </Container>

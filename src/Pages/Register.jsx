@@ -17,7 +17,6 @@ const Register = () => {
     createUserWithEmailAndPasswordFunc,
     updateProfileFunc,
     signInWithPopupFunc,
-
     setUser,
     setError,
     error,
@@ -54,9 +53,7 @@ const Register = () => {
         photoURL,
       };
       setLoader(true);
-      axiosSec.post("/user", userData).then((res) => {
-        console.log(res.data);
-      });
+      axiosSec.post("/user", userData).then(() => {});
       createUserWithEmailAndPasswordFunc(email, password)
         .then((res) => {
           toast("Successfully Sign Up");
@@ -112,15 +109,15 @@ const Register = () => {
               {/* Google Sign Up */}
               <button
                 onClick={handelSignInWithGoogle}
-                className="btn w-full bg-sky-100 text-black border border-gray-200 hover:bg-sky-200 flex items-center gap-3"
+                className="w-full flex items-center justify-center gap-3 py-3 rounded-xl border border-gray-300 hover:bg-gray-100 transition font-medium"
               >
-                <svg width="16" height="16" viewBox="0 0 48 48">
+                <svg width="18" height="18" viewBox="0 0 48 48">
                   <path
                     fill="#FFC107"
                     d="M43.6 20.1H42V20H24v8h11.3C33.7 32.1 29.3 35 24 35c-6.1 0-11-4.9-11-11s4.9-11 11-11c2.8 0 5.4 1.1 7.4 2.9l5.7-5.7C33.6 6.7 28.9 5 24 5 12.4 5 3 14.4 3 26s9.4 21 21 21 21-9.4 21-21c0-1.4-.1-2.6-.4-3.9z"
                   />
                 </svg>
-                Register with Google
+                Log in with Google
               </button>
 
               {/* Divider */}

@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import jsPDF from "jspdf";
-import useAuth from "../Hooks/useAuth";
+import useAuth from "../../../Hooks/useAuth";
 import { Atom } from "react-loading-indicators";
 import { FaFileDownload } from "react-icons/fa";
-import Motion from "../Components/Motion/Motion";
-import MotionHeading from "../Components/Motion/MotionHeading";
-import Container from "../Components/Container/Container";
-import useAxiosSecure from "../Hooks/useAxiosSecure";
+import Motion from "../../../Components/Motion/Motion";
+import MotionHeading from "../../../Components/Motion/MotionHeading";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
 const MyContribution = () => {
   const { loader, setLoader } = useAuth();
@@ -46,7 +45,7 @@ const MyContribution = () => {
   };
 
   return (
-    <Container>
+    <div>
       <MotionHeading>
         My <span className="heading-primary">Contribution</span>: (
         {contributions.length})
@@ -120,7 +119,7 @@ const MyContribution = () => {
           </div>
         </Motion>
       </div>
-    </Container>
+    </div>
   );
 };
 
