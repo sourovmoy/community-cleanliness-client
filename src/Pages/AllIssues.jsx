@@ -46,6 +46,7 @@ const AllIssues = () => {
     e.preventDefault();
     let search = e.target.search.value;
     const trim = search.trim().toLocaleLowerCase();
+    e.target.reset();
     setSearch(trim);
     setPage(1);
   };
@@ -157,30 +158,35 @@ const AllIssues = () => {
       </div>
       {totalPages > 1 && (
         <div className="flex justify-center gap-2 mt-10 flex-wrap">
+          {/* Prev Button */}
           <button
             disabled={page === 1}
             onClick={() => setPage((p) => p - 1)}
-            className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+            className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Prev
           </button>
 
+          {/* Page Numbers */}
           {[...Array(totalPages)].map((_, i) => (
             <button
               key={i}
               onClick={() => setPage(i + 1)}
               className={`px-4 py-2 rounded ${
-                page === i + 1 ? "bg-lime-500 text-white" : "bg-gray-200"
-              }`}
+                page === i + 1
+                  ? "bg-sky-500 text-white dark:bg-sky-600"
+                  : "bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200"
+              } hover:bg-gray-300 dark:hover:bg-gray-600`}
             >
               {i + 1}
             </button>
           ))}
 
+          {/* Next Button */}
           <button
             disabled={page === totalPages}
             onClick={() => setPage((p) => p + 1)}
-            className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+            className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Next
           </button>
