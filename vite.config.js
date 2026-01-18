@@ -6,16 +6,9 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   plugins: [tailwindcss(), react()],
   build: {
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom'],
-          firebase: ['firebase'],
-          charts: ['recharts'],
-          ui: ['react-icons', 'sweetalert2', 'react-toastify']
-        }
-      }
-    },
     chunkSizeWarningLimit: 1000
+  },
+  optimizeDeps: {
+    include: ['firebase/app', 'firebase/auth']
   }
 });
