@@ -91,17 +91,17 @@ const Register = () => {
   };
   return (
     <Container>
-      <div className="flex justify-center items-center my-10 px-4">
+      <div className="flex justify-center items-center my-10 min-h-screen transition-colors duration-300">
         <div className="w-full max-w-md">
-          <div className="card bg-transparent shadow-2xl border border-gray-200/30 rounded-2xl">
+          <div className="card bg-white dark:bg-gray-800 shadow-2xl border border-gray-200 dark:border-gray-700 rounded-2xl transition-colors duration-300">
             <div className="card-body text-center">
               {/* Heading */}
-              <h2 className="text-3xl font-bold text-sky-700">
+              <h2 className="text-3xl font-bold text-sky-700 dark:text-sky-400">
                 Create Account
               </h2>
-              <p className="text-sm text-gray-500 mt-1 mb-6">
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 mb-6">
                 Already have an account?{" "}
-                <Link to="/login" className="text-sky-600 hover:underline">
+                <Link to="/login" className="text-sky-600 dark:text-sky-400 hover:underline">
                   Log in
                 </Link>
               </p>
@@ -109,7 +109,7 @@ const Register = () => {
               {/* Google Sign Up */}
               <button
                 onClick={handelSignInWithGoogle}
-                className="w-full flex items-center justify-center gap-3 py-3 rounded-xl border border-gray-300 transition font-medium"
+                className="w-full flex items-center justify-center gap-3 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors duration-200 font-medium"
               >
                 <svg width="18" height="18" viewBox="0 0 48 48">
                   <path
@@ -122,9 +122,9 @@ const Register = () => {
 
               {/* Divider */}
               <div className="flex items-center gap-4 my-6">
-                <div className="h-px bg-gray-300 flex-1"></div>
-                <span className="text-gray-500 text-sm">or</span>
-                <div className="h-px bg-gray-300 flex-1"></div>
+                <div className="h-px bg-gray-300 dark:bg-gray-600 flex-1"></div>
+                <span className="text-gray-500 dark:text-gray-400 text-sm">or</span>
+                <div className="h-px bg-gray-300 dark:bg-gray-600 flex-1"></div>
               </div>
 
               {/* Registration Form */}
@@ -137,7 +137,7 @@ const Register = () => {
                   type="text"
                   placeholder="Your Name"
                   required
-                  className="input input-bordered w-full"
+                  className="input input-bordered w-full bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:border-sky-500 focus:ring-sky-500 transition-colors duration-200"
                 />
 
                 <input
@@ -145,7 +145,7 @@ const Register = () => {
                   type="file"
                   placeholder="Photo URL"
                   required
-                  className="file-input file-input-md w-full"
+                  className="file-input file-input-md w-full bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white file:bg-sky-50 dark:file:bg-sky-900 file:text-sky-700 dark:file:text-sky-300 file:border-0 transition-colors duration-200"
                 />
 
                 <input
@@ -154,7 +154,7 @@ const Register = () => {
                   placeholder="Your Email"
                   autoComplete="username"
                   required
-                  className="input input-bordered w-full"
+                  className="input input-bordered w-full bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:border-sky-500 focus:ring-sky-500 transition-colors duration-200"
                 />
 
                 <div className="relative">
@@ -164,28 +164,34 @@ const Register = () => {
                     placeholder="Password"
                     autoComplete="current-password"
                     required
-                    className="input input-bordered w-full pr-10"
+                    className="input input-bordered w-full pr-10 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:border-sky-500 focus:ring-sky-500 transition-colors duration-200"
                   />
                   <span
                     onClick={() => setShow(!show)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer text-gray-500"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors duration-200"
                   >
                     {show ? <FaEyeSlash /> : <FaEye />}
                   </span>
                 </div>
 
-                <button className="btn btn-primary w-full hover:scale-105 transition">
+                <button className="btn btn-primary w-full hover:scale-105 transition-all duration-200 bg-sky-600 hover:bg-sky-700 dark:bg-sky-700 dark:hover:bg-sky-600 border-none text-white">
                   Register
                 </button>
               </form>
 
               {/* Messages */}
               {user && (
-                <p className="text-green-500 text-sm mt-4">
-                  Successfully Signed Up 🎉
-                </p>
+                <div className="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg mt-4">
+                  <p className="text-green-600 dark:text-green-400 text-sm font-medium">
+                    Successfully Signed Up 🎉
+                  </p>
+                </div>
               )}
-              {error && <p className="text-red-500 text-sm mt-4">{error}</p>}
+              {error && (
+                <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg mt-4">
+                  <p className="text-red-600 dark:text-red-400 text-sm font-medium">{error}</p>
+                </div>
+              )}
             </div>
           </div>
         </div>

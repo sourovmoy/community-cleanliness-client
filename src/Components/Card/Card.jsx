@@ -11,8 +11,8 @@ const Card = ({
   
   const variants = {
     default: 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700',
-    gradient: 'bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900',
-    transparent: 'bg-transparent border border-gray-200/30 dark:border-gray-700/30',
+    gradient: 'bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700',
+    transparent: 'bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200/30 dark:border-gray-700/30',
     primary: 'bg-sky-50 dark:bg-sky-900/20 border border-sky-200 dark:border-sky-700'
   };
 

@@ -1,4 +1,3 @@
-import React from "react";
 import { Link, NavLink } from "react-router";
 import useAuth from "../../Hooks/useAuth";
 import UserDropdown from "../UserDropdown/UserDropdown";
@@ -8,32 +7,33 @@ import { useTheme } from "../../Context/ThemeContext";
 const Navbar = () => {
   const { user, signOutFunc, loader } = useAuth();
   const { role } = useRole();
-  const { theme, toggleTheme } = useTheme();
+  const { toggleTheme } = useTheme();
 
   const links = (
     <>
-      <li className="font-semibold text-sky-400">
+      <li className="font-semibold text-sky-600 dark:text-sky-400">
         <NavLink to={"/"}>Home</NavLink>
       </li>
 
-      <li className="font-semibold text-sky-400">
+      <li className="font-semibold text-sky-600 dark:text-sky-400">
         <NavLink to={"/all-issues"}>All Issues</NavLink>
       </li>
       {user && (
         <>
-          <li className="font-semibold text-sky-400">
+          <li className="font-semibold text-sky-600 dark:text-sky-400">
             <NavLink to={"/add-issues"}>Add Issues</NavLink>
           </li>
         </>
       )}
-      <li className="font-semibold text-sky-400">
+      <li className="font-semibold text-sky-600 dark:text-sky-400">
         <NavLink to={"/about-us"}>About us</NavLink>
       </li>
-      <li className="font-semibold text-sky-400">
+      <li className="font-semibold text-sky-600 dark:text-sky-400">
         <NavLink to={"/contact"}>Contact</NavLink>
       </li>
     </>
   );
+
   const handelSignOut = () => {
     signOutFunc()
       .then((res) => console.log(res))
@@ -41,10 +41,10 @@ const Navbar = () => {
   };
 
   return (
-    <div className="navbar shadow-sm px-4 sm:px-10 z-20 fixed top-0 left-0 right-0 bg-sky-200 dark:bg-sky-900">
+    <div className="navbar shadow-sm px-4 sm:px-10 z-20 fixed top-0 left-0 right-0 bg-sky-200 dark:bg-gray-900 border-b border-sky-300 dark:border-gray-700 transition-colors duration-300">
       <div className="navbar-start">
         <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden text-gray-700 dark:text-gray-300">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -63,20 +63,20 @@ const Navbar = () => {
 
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content rounded-box bg-sky-100 mt-3 w-40 p-2 shadow items-center gap-2"
+            className="menu menu-sm dropdown-content rounded-box bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 mt-3 w-40 p-2 shadow-lg items-center gap-2"
           >
             {links}
           </ul>
         </div>
 
-        <Link to={"/"} className="text-xl sm:text-2xl font-bold">
+        <Link to={"/"} className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white">
           C<span className="heading-primary">C&I</span>RP
         </Link>
       </div>
 
       <div className="navbar-center sm:navbar-end hidden lg:flex">
-        <ul className="menu menu-horizontal px-1 items-center ">
-          <label className="toggle text-base-content">
+        <ul className="menu menu-horizontal px-1 items-center">
+          <label className="toggle text-gray-700 dark:text-gray-300 mr-4">
             <input
               onClick={toggleTheme}
               type="checkbox"
@@ -89,6 +89,7 @@ const Navbar = () => {
               aria-label="sun"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
+              className="w-5 h-5"
             >
               <g
                 strokeLinejoin="round"
@@ -113,6 +114,7 @@ const Navbar = () => {
               aria-label="moon"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
+              className="w-5 h-5"
             >
               <g
                 strokeLinejoin="round"
@@ -129,7 +131,7 @@ const Navbar = () => {
           {links}
 
           {loader ? (
-            <span className="loading loading-spinner loading-md"></span>
+            <span className="loading loading-spinner loading-md text-sky-600 dark:text-sky-400"></span>
           ) : user ? (
             <UserDropdown user={user} handelSignOut={handelSignOut} />
           ) : (
@@ -147,22 +149,22 @@ const Navbar = () => {
 
       <div className="navbar-end lg:hidden">
         {loader ? (
-          <span className="loading loading-spinner loading-md"></span>
+          <span className="loading loading-spinner loading-md text-sky-600 dark:text-sky-400"></span>
         ) : user ? (
           <div className="dropdown dropdown-end">
             <div tabIndex={0} role="button" className="">
               <img
-                className="h-11 w-11 rounded-full outline-3 outline-sky-600"
+                className="h-11 w-11 rounded-full outline-3 outline-sky-600 dark:outline-sky-400"
                 src={user?.photoURL}
                 alt=""
               />
             </div>
             <ul
               tabIndex="-1"
-              className="dropdown-content menu bg-base-100 rounded-box z-10 p-2 shadow-sm"
+              className="dropdown-content menu bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-box z-10 p-2 shadow-lg"
             >
               <div className="flex justify-between mx-4">
-                <p className=" text-sky-400 font-semibold">Theme</p>
+                <p className="text-sky-600 dark:text-sky-400 font-semibold">Theme</p>
                 <input
                   onClick={toggleTheme}
                   type="checkbox"
@@ -171,20 +173,20 @@ const Navbar = () => {
                 />
               </div>
               <li>
-                <p className="font-semibold text-sky-400">
+                <p className="font-semibold text-sky-600 dark:text-sky-400">
                   {user?.displayName}
                 </p>
               </li>
               <li>
-                <p className="font-semibold text-sky-400">{user?.email}</p>
+                <p className="font-semibold text-sky-600 dark:text-sky-400">{user?.email}</p>
               </li>
-              <hr />
+              <hr className="border-gray-200 dark:border-gray-600" />
               <li>
                 {role === "user" && (
                   <li>
                     <NavLink
                       to="/dashboard/user"
-                      className="font-semibold text-sky-400 mt-5"
+                      className="font-semibold text-sky-600 dark:text-sky-400 mt-5"
                     >
                       Dashboard
                     </NavLink>
@@ -194,7 +196,7 @@ const Navbar = () => {
                   <li>
                     <NavLink
                       to="/dashboard/admin"
-                      className="font-semibold text-sky-400 mt-5"
+                      className="font-semibold text-sky-600 dark:text-sky-400 mt-5"
                     >
                       Dashboard
                     </NavLink>
@@ -214,7 +216,7 @@ const Navbar = () => {
               onClick={toggleTheme}
               type="checkbox"
               defaultChecked={localStorage.getItem("theme") === "dark"}
-              className="toggle"
+              className="toggle mr-2"
             />
             <Link to="/login" className="btn-primary ml-2 mr-2">
               Login
