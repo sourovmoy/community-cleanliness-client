@@ -23,3 +23,6 @@
 a.active {
   @apply text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-green-600 font-extrabold;
 }
+
+/* Import card utilities for consistent styling */
+@import './styles/card-utilities.css';

@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import useAxiosInstance from "../Hooks/useAxiosInstance";
 import { toast } from "react-toastify";
 import Container from "../Components/Container/Container";
+import { FormCard } from "../Components/Card/Card";
 import useRole from "../Hooks/useRole";
 
 const Login = () => {
@@ -114,7 +115,7 @@ const Login = () => {
   return (
     <Container>
       <div className="flex items-center justify-center min-h-screen px-4 pt-10">
-        <div className="sm:w-[28rem] w-full text-center shadow-2xl rounded-2xl p-8 space-y-6">
+        <FormCard className="sm:w-[28rem] w-full text-center space-y-6">
           {/* Heading */}
           <h2 className="text-3xl heading-primary font-bold mb-2">Log in</h2>
           <p className="text-sm text-gray-600">
@@ -128,7 +129,7 @@ const Login = () => {
           <div className="space-y-3">
             <button
               onClick={handelGoogleSingIn}
-              className="w-full flex items-center justify-center gap-3 py-3 rounded-xl border border-gray-300 hover:bg-gray-100 transition font-medium"
+              className="w-full flex items-center justify-center gap-3 py-3 rounded-xl border border-gray-300 transition font-medium"
             >
               <svg width="18" height="18" viewBox="0 0 48 48">
                 <path
@@ -210,7 +211,7 @@ const Login = () => {
             </p>
           )}
           {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
-        </div>
+        </FormCard>
       </div>
     </Container>
   );
