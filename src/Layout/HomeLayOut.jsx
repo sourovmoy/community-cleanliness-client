@@ -8,7 +8,7 @@ import { ToastContainer } from "react-toastify";
 const HomeLayOut = () => {
   return (
     <div className="bg-base-100">
-      <header>
+      <header className="">
         <Navbar />
       </header>
       <main>

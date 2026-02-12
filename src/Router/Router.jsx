@@ -19,6 +19,8 @@ import UserHome from "../Pages/Dashboard/User/UserHome";
 import AdminHome from "../Pages/Dashboard/admin/AdminHome";
 import ContributionDetails from "../Pages/Dashboard/admin/ContributionDetails";
 import Profile from "../Pages/Profile";
+import PaymentSuccess from "../Pages/Payment/PaymentSuccess";
+import PaymentFailed from "../Pages/Payment/PaymentFailed";
 
 const router = createBrowserRouter([
   {
@@ -65,6 +67,18 @@ const router = createBrowserRouter([
             <AddIssues />
           </PrivetRouter>
         ),
+      },
+      {
+        path: "/contribution/success/:transactionId",
+        element: (
+          <PrivetRouter>
+            <PaymentSuccess />
+          </PrivetRouter>
+        ),
+      },
+      {
+        path: "/contribution/failed",
+        element: <PaymentFailed />,
       },
     ],
   },

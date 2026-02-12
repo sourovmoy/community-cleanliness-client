@@ -12,31 +12,48 @@ import SkeletonDetail from "../Components/Skeleton/SkeletonDetails";
 import PayContributionModal from "../Components/Modals/PayContributionModal";
 import { toast } from "react-toastify";
 import Container from "../Components/Container/Container";
+import { useForm } from "react-hook-form";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const IssueDetails = () => {
   const navigate = useNavigate();
   const { user, setLoader, loader } = useAuth();
   const [loading, setLoading] = useState(true);
   const axiosInstance = useAxiosInstance();
+  const axiosSecure = useAxiosSecure();
   const id = useParams();
   const [issue, setIssue] = useState({});
   const [update, setUpdate] = useState(true);
   const [contributions, setContributions] = useState([]);
-
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      title: "",
+      amount: "",
+      name: "",
+      email: "",
+    },
+  });
   useEffect(() => {
     setLoading(true);
     axiosInstance.get(`/issues/${id.id}`).then((res) => {
       setIssue(res.data);
-      setLoader(false);
-      setLoading(false);
 
-      axiosInstance.get(`/issues/contribution/${id.id}`).then((res) => {
-        setContributions(res.data);
-      });
+      axiosInstance
+        .get(`/issues/contribution/${id.id}?paymentSuccess=true`)
+        .then((res) => {
+          setContributions(res.data);
+          setLoader(false);
+          setLoading(false);
+        });
     });
   }, [axiosInstance, id, setLoader, update]);
 
-  if (loader) {
+  if (loader || loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
         <Atom color="#0EA5E9" size="medium" text="" textColor="" />
@@ -44,40 +61,41 @@ const IssueDetails = () => {
     );
   }
 
-  const handelContribution = (e) => {
-    e.preventDefault();
-    const contribution = e.target.amount.value;
-    const phone = e.target.phone.value;
-    const date = new Date().toISOString();
+  const onSubmit = (data) => {
     const newContribution = {
-      paid_amount: contribution,
+      paid_amount: data.amount,
       image: issue.image,
       contributor_image: user?.photoURL,
-      phone: phone,
+      phone: data.phone,
       category: issue.category,
-      date: date,
+      date: new Date().toISOString(),
       title: issue.title,
       issue: issue._id,
       email: user?.email,
+      name: user?.displayName,
+      address: data.address,
     };
+    console.log(newContribution);
+
     if (user) {
-      axiosInstance.post("/contribution", newContribution).then((res) => {
-        if (res.data.acknowledged) {
-          document.getElementById(id.id).close();
-          Swal.fire({
-            title: "Congratulation on your Contribution",
-            icon: "success",
-            draggable: true,
-          });
-          setUpdate(!update);
-        }
+      axiosSecure.post("/contribution", newContribution).then((res) => {
+        console.log(res.data);
+        window.location.href = res.data.url;
+        setUpdate(!update);
       });
     } else {
       toast.error("Please Login to contribute");
       navigate("/login");
     }
   };
+
   const openModal = (id) => {
+    reset({
+      title: issue?.title || "",
+      amount: issue?.amount || "",
+      name: user?.displayName || "",
+      email: user?.email || "",
+    });
     document.getElementById(id).showModal();
   };
 
@@ -188,9 +206,12 @@ const IssueDetails = () => {
         <IssuesContribution contributions={contributions} />
       </div>
       <PayContributionModal
+        register={register}
+        handleSubmit={handleSubmit}
+        errors={errors}
         issue={issue}
         user={user}
-        handelContribution={handelContribution}
+        onSubmit={onSubmit}
       />
     </Container>
   );

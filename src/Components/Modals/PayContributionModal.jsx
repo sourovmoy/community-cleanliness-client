@@ -1,6 +1,12 @@
 import React from "react";
 
-const PayContributionModal = ({ issue, user, handelContribution }) => {
+const PayContributionModal = ({
+  issue,
+  handleSubmit,
+  onSubmit,
+  register,
+  errors,
+}) => {
   return (
     <dialog id={issue?._id} className="modal modal-bottom sm:modal-middle">
       <div className="modal-box">
@@ -9,17 +15,17 @@ const PayContributionModal = ({ issue, user, handelContribution }) => {
             Contribute to Clean-Up
           </h2>
 
-          <form onSubmit={handelContribution} className="space-y-5">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             <div>
               <label className="block text-gray-600 dark:text-gray-300 mb-1 text-sm font-medium">
                 Issue Title
               </label>
               <input
                 type="text"
-                name="title"
-                defaultValue={issue?.title}
+                // defaultValue={issue?.title}
                 readOnly
                 className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-200 cursor-not-allowed"
+                {...register("title")}
               />
             </div>
 
@@ -29,12 +35,17 @@ const PayContributionModal = ({ issue, user, handelContribution }) => {
               </label>
               <input
                 type="number"
-                defaultValue={issue?.amount}
-                name="amount"
+                // defaultValue={issue?.amount}
                 placeholder="e.g. 250"
                 className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:ring-2 focus:ring-sky-500 focus:outline-none"
                 required
+                {...register("amount", { required: true, min: 1 })}
               />
+              {errors.amount && (
+                <span className="text-red-500 text-sm">
+                  Amount is required and must be greater than 0
+                </span>
+              )}
             </div>
 
             <div>
@@ -43,9 +54,9 @@ const PayContributionModal = ({ issue, user, handelContribution }) => {
               </label>
               <input
                 type="text"
-                name="name"
+                {...register("name")}
                 readOnly
-                defaultValue={user?.displayName}
+                // defaultValue={user?.displayName}
                 placeholder="Enter your full name"
                 className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:ring-2 focus:ring-green-500 focus:outline-none"
               />
@@ -57,8 +68,8 @@ const PayContributionModal = ({ issue, user, handelContribution }) => {
               </label>
               <input
                 type="email"
-                name="email"
-                defaultValue={user?.email}
+                {...register("email")}
+                // defaultValue={user?.email}
                 readOnly
                 className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 cursor-not-allowed"
               />
@@ -70,13 +81,17 @@ const PayContributionModal = ({ issue, user, handelContribution }) => {
               </label>
               <input
                 type="tel"
-                name="phone"
+                {...register("phone")}
                 placeholder="e.g. 017XXXXXXXX"
                 pattern="[0-9]{11}"
                 maxLength="11"
                 className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:ring-2 focus:ring-sky-500 focus:outline-none"
-                required
               />
+              {errors.phone && (
+                <span className="text-red-500 text-sm">
+                  Phone number is required and must be 11 digits
+                </span>
+              )}
             </div>
 
             <div>
@@ -85,11 +100,15 @@ const PayContributionModal = ({ issue, user, handelContribution }) => {
               </label>
               <input
                 type="text"
-                name="address"
                 placeholder="e.g. Banani, Dhaka"
                 className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:ring-2 focus:ring-green-500 focus:outline-none"
-                required
+                {...register("address", { required: true })}
               />
+              {errors.address && (
+                <span className="text-red-500 text-sm">
+                  Address is required
+                </span>
+              )}
             </div>
 
             <div>
@@ -106,11 +125,16 @@ const PayContributionModal = ({ issue, user, handelContribution }) => {
                 Additional Info (optional)
               </label>
               <textarea
-                name="additionalInfo"
+                {...register("additionalInfo", { maxLength: 200 })}
                 rows="3"
                 placeholder="Any notes or message..."
                 className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:ring-2 focus:ring-sky-500 focus:outline-none resize-none"
               ></textarea>
+              {errors.additionalInfo && (
+                <span className="text-red-500 text-sm">
+                  Additional info must be less than 200 characters
+                </span>
+              )}
             </div>
 
             <button

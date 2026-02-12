@@ -44,7 +44,11 @@ const Navbar = () => {
     <div className="navbar shadow-sm px-4 sm:px-10 z-20 fixed top-0 left-0 right-0 bg-sky-200 dark:bg-gray-900 border-b border-sky-300 dark:border-gray-700 transition-colors duration-300">
       <div className="navbar-start">
         <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden text-gray-700 dark:text-gray-300">
+          <div
+            tabIndex={0}
+            role="button"
+            className="btn btn-ghost lg:hidden text-gray-700 dark:text-gray-300"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -68,8 +72,10 @@ const Navbar = () => {
             {links}
           </ul>
         </div>
-
-        <Link to={"/"} className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white">
+        <Link
+          to={"/"}
+          className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white"
+        >
           C<span className="heading-primary">C&I</span>RP
         </Link>
       </div>
@@ -164,7 +170,9 @@ const Navbar = () => {
               className="dropdown-content menu bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-box z-10 p-2 shadow-lg"
             >
               <div className="flex justify-between mx-4">
-                <p className="text-sky-600 dark:text-sky-400 font-semibold">Theme</p>
+                <p className="text-sky-600 dark:text-sky-400 font-semibold">
+                  Theme
+                </p>
                 <input
                   onClick={toggleTheme}
                   type="checkbox"
@@ -178,7 +186,9 @@ const Navbar = () => {
                 </p>
               </li>
               <li>
-                <p className="font-semibold text-sky-600 dark:text-sky-400">{user?.email}</p>
+                <p className="font-semibold text-sky-600 dark:text-sky-400">
+                  {user?.email}
+                </p>
               </li>
               <hr className="border-gray-200 dark:border-gray-600" />
               <li>

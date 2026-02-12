@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 const ErrorPage = () => {
   const navigate = useNavigate();
@@ -17,12 +17,12 @@ const ErrorPage = () => {
           worry, you can get back on track!
         </p>
 
-        <button
-          onClick={() => navigate("/")}
+        <Link
+          to={"/"}
           className="mt-8 px-8 py-3 bg-white text-[#3b8132] font-semibold rounded-full shadow-md hover:scale-105 transition-transform duration-300"
         >
           Go Home
-        </button>
+        </Link>
 
         <div className="mt-10 relative w-40 h-40 md:w-56 md:h-56">
           <div className="absolute inset-0 bg-white bg-opacity-20 rounded-full animate-ping"></div>
