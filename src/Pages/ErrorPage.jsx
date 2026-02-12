@@ -1,8 +1,7 @@
 import React from "react";
-import { Link, useNavigate } from "react-router";
+import { Link } from "react-router";
 
 const ErrorPage = () => {
-  const navigate = useNavigate();
   return (
     <div>
       <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-sky-800 to-sky-500 text-white px-4 text-center m-10 rounded-full">
